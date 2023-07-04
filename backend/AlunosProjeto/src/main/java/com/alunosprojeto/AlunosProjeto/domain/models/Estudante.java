@@ -1,14 +1,13 @@
-package com.alunosprojeto.domain.models;
+package com.alunosprojeto.AlunosProjeto.domain.models;
 
-import com.alunosprojeto.Api.dto.EstudanteDTO;
-import com.alunosprojeto.Api.dto.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTODetalhes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.management.ConstructorParameters;
 import java.time.LocalDate;
 
 @Table(name = "estudantes")
@@ -22,6 +21,8 @@ public class Estudante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String email;
+    private String senha;
     private LocalDate dataDeNascimento;
     private String areaDeEstudos;
 
