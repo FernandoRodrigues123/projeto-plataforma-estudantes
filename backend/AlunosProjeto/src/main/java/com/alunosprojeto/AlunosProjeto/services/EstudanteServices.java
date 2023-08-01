@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,14 @@ public class EstudanteServices {
         Estudante estudante = new Estudante(dados);//converto meus dados DTO para minha entidade estudantes
         estudanteRepository.save(estudante);// salvo ela
 
-        UsuarioEstudante usuarioEstudante = new UsuarioEstudante(estudante.getId(), estudante.getEmail(), estudante.getSenha());//crio uma entidade
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encode = encoder.encode(dados.senha());
+
+        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();//crio uma entidade
+
+        usuarioEstudante.setLogin(dados.email());
+        usuarioEstudante.setSenha(encode);
+
         usuarioEstudanteRepository.save(usuarioEstudante);
 
         return estudante;

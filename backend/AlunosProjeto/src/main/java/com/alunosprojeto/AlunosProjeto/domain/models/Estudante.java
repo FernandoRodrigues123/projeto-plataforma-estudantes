@@ -23,13 +23,17 @@ public class Estudante {
     private String nome;
     private String email;
     private String senha;
+    @Column(name = "data_de_nascimento")
     private LocalDate dataDeNascimento;
+    @Column(name = "area")
     private String areaDeEstudos;
 
     public Estudante(EstudanteDTO estudanteDTO) {
         this.nome = estudanteDTO.nome();
         this.dataDeNascimento = estudanteDTO.dataDeNascimento();
         this.areaDeEstudos = estudanteDTO.areaDeEstudos();
+        this.senha = estudanteDTO.senha();
+        this.email = estudanteDTO.email();
     }
 
     public void atulizar(EstudanteDTODetalhes estudanteDTO) {

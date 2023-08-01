@@ -13,6 +13,6 @@ public class UsuarioEstudanteServices implements UserDetailsService {
     private UsuarioEstudanteRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.loadByLogin(username);
+        return repository.findByLogin(username);
     }
 }
