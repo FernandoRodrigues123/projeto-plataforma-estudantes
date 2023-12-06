@@ -61,8 +61,12 @@ public class EstudanteController {
     public ResponseEntity<List<EstudanteDTO>> buscarTodosEstudantes() {
         return ResponseEntity.ok(services.buscarTodosEstudantes());
     }
-
-    @PutMapping()
+    @GetMapping("/{id}")
+    public ResponseEntity<EstudanteDTODetalhes> buscaPorId(@PathVariable Long id){
+        Estudante estudante = services.buscarEstudantePorId(id);
+        return ResponseEntity.ok(new EstudanteDTODetalhes(estudante));
+    }
+    @PutMapping
     @Transactional
     public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes estudanteDTO) {
         return ResponseEntity.ok(services.atualizarCadastroDeEstudante(estudanteDTO));

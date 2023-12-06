@@ -52,6 +52,10 @@ public class EstudanteServices {
         return estudanteDTO;
     }
 
+    public Estudante buscarEstudantePorId(Long id) {
+        return estudanteRepository.findById(id).get();
+    }
+
     @Transactional
     public EstudanteDTODetalhes atualizarCadastroDeEstudante(EstudanteDTODetalhes estudanteDTO) {
 
@@ -62,7 +66,7 @@ public class EstudanteServices {
     }
 
     @Transactional
-    public void deletarCadastroEstudante(Long id){
+    public void deletarCadastroEstudante(Long id) {
         Estudante estudante = estudanteRepository.getReferenceById(id);
         estudanteRepository.delete(estudante);
     }
