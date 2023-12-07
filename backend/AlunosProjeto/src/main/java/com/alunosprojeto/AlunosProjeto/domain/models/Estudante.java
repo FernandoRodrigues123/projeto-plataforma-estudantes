@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "estudantes")
 @Entity(name = "Estudante")
@@ -27,6 +29,10 @@ public class Estudante {
     private LocalDate dataDeNascimento;
     @Column(name = "area")
     private String areaDeEstudos;
+
+//    @OneToMany(mappedBy = "estudante") isso aqui deu um erro trenebrozo, e sem isso funcionou perfeitamente
+//    private List<Publicacao> publicacoes;
+
 
     public Estudante(EstudanteDTO estudanteDTO) {
         this.nome = estudanteDTO.nome();

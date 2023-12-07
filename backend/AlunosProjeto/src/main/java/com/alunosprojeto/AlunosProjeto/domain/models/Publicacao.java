@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "publicacoes")
+@Table(name = "publicacao")
 @Entity(name = "Publicacao")
 @Getter
 @Setter
@@ -21,5 +21,6 @@ public class Publicacao {
     private String corpo;
     private String referencias;
     @ManyToOne
+    @JoinColumn(name = "estudante_id", nullable = false)
     private Estudante estudante;
 }
