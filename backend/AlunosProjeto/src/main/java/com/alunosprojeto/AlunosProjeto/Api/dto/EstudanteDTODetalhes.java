@@ -18,6 +18,6 @@ public record EstudanteDTODetalhes(
 
 ) {
     public EstudanteDTODetalhes(Estudante estudante){
-        this(estudante.getId(), estudante.getEmail(), estudante.getNome(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudos());
+        this(estudante.getId(),estudante.getNome(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudos());
     }
 }

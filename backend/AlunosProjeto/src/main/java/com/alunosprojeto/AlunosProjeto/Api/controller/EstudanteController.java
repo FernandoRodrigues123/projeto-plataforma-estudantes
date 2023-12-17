@@ -9,9 +9,11 @@ import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import com.alunosprojeto.AlunosProjeto.security.TokenServices;
 import com.alunosprojeto.AlunosProjeto.services.EstudanteServices;
+import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +37,7 @@ public class EstudanteController {
 
     @Autowired
     private TokenServices tokenServices;
+
     @PostMapping("/cadastro")
     @Transactional
     public ResponseEntity<EstudanteDTODetalhes> cadastrarEstudante(@RequestBody @Valid EstudanteDTO dados, UriComponentsBuilder uriBuilder) {
@@ -49,7 +52,7 @@ public class EstudanteController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid UsuarioEstudanteDTO dto) {
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.login(),dto.senha());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.login(), dto.senha());
         Authentication authenticate = manager.authenticate(token);
 
         String tokenJWT = tokenServices.gerarToken((UsuarioEstudante) authenticate.getPrincipal());
@@ -58,26 +61,46 @@ public class EstudanteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EstudanteDTO>> buscarTodosEstudantes() {
+    public ResponseEntity<List<EstudanteDTODetalhes>> buscarTodosEstudantes() {
         return ResponseEntity.ok(services.buscarTodosEstudantes());
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<EstudanteDTODetalhes> buscaPorId(@PathVariable Long id){
-        Estudante estudante = services.buscarEstudantePorId(id);
-        return ResponseEntity.ok(new EstudanteDTODetalhes(estudante));
+
+    @GetMapping("/{email}")
+    public ResponseEntity<EstudanteDTODetalhes> buscaPorEmail(@PathVariable String email) {
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(email);
+
+        if (validacao) {
+            Estudante estudante = services.buscarEstudantePorEmail(email);
+            return ResponseEntity.ok(new EstudanteDTODetalhes(estudante));
+
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
     }
+
     @PutMapping
     @Transactional
+
     public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes estudanteDTO) {
-        return ResponseEntity.ok(services.atualizarCadastroDeEstudante(estudanteDTO));
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(estudanteDTO.email());
+        if (validacao) {
+            return ResponseEntity.ok(services.atualizarCadastroDeEstudante(estudanteDTO));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{email}")
     @Transactional
-    public ResponseEntity deletarCadastroEstudante(@PathVariable Long id) {
-        services.deletarCadastroEstudante(id);
+    public ResponseEntity deletarCadastroEstudante(@PathVariable String email) {
 
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(email);
+        if (!validacao) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        services.deletarCadastroEstudante(email);
         return ResponseEntity.noContent().build();
+
     }
 
 }

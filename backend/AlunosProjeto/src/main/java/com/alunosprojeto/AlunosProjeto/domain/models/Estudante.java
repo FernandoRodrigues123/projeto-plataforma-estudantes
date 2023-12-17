@@ -18,6 +18,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Estudante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +39,8 @@ public class Estudante {
         this.nome = estudanteDTO.nome();
         this.dataDeNascimento = estudanteDTO.dataDeNascimento();
         this.areaDeEstudos = estudanteDTO.areaDeEstudos();
-        this.senha = estudanteDTO.senha();
         this.email = estudanteDTO.email();
+        this.senha = estudanteDTO.senha();
     }
 
     public void atulizar(EstudanteDTODetalhes estudanteDTO) {

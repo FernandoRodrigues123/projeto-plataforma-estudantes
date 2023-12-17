@@ -8,11 +8,8 @@ import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import com.alunosprojeto.AlunosProjeto.domain.repository.UsuarioEstudanteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,10 +28,10 @@ public class EstudanteServices {
         Estudante estudante = new Estudante(dados);//converto meus dados DTO para minha entidade estudantes
         estudanteRepository.save(estudante);// salvo ela
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // criptografando senha
         String encode = encoder.encode(dados.senha());
 
-        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();//crio uma entidade
+        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();//crio uma entidade Usuario
 
         usuarioEstudante.setLogin(dados.email());
         usuarioEstudante.setSenha(encode);
@@ -46,14 +43,14 @@ public class EstudanteServices {
     }
 
 
-    public List<EstudanteDTO> buscarTodosEstudantes() {
+    public List<EstudanteDTODetalhes> buscarTodosEstudantes() {
         List<Estudante> estudantes = estudanteRepository.findAll();
-        List<EstudanteDTO> estudanteDTO = estudantes.stream().map(EstudanteDTO::new).toList();
+        List<EstudanteDTODetalhes> estudanteDTO = estudantes.stream().map(EstudanteDTODetalhes::new).toList();
         return estudanteDTO;
     }
 
     public Estudante buscarEstudantePorId(Long id) {
-        return estudanteRepository.findById(id).get();
+        return estudanteRepository.getReferenceById(id);
     }
 
     @Transactional
@@ -66,9 +63,12 @@ public class EstudanteServices {
     }
 
     @Transactional
-    public void deletarCadastroEstudante(Long id) {
-        Estudante estudante = estudanteRepository.getReferenceById(id);
+    public void deletarCadastroEstudante(String email) {
+        Estudante estudante = estudanteRepository.findByEmail(email);
         estudanteRepository.delete(estudante);
     }
 
+    public Estudante buscarEstudantePorEmail(String email) {
+        return estudanteRepository.findByEmail(email);
+    }
 }
