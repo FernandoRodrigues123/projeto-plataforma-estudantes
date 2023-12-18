@@ -13,6 +13,9 @@ import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,8 +64,8 @@ public class EstudanteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EstudanteDTODetalhes>> buscarTodosEstudantes() {
-        return ResponseEntity.ok(services.buscarTodosEstudantes());
+    public ResponseEntity<Page<EstudanteDTODetalhes>> buscarTodosEstudantes(@PageableDefault(size = 10,sort = {"nome"}) Pageable paginacao) {
+        return ResponseEntity.ok(services.buscarTodosEstudantes(paginacao));
     }
 
     @GetMapping("/{email}")

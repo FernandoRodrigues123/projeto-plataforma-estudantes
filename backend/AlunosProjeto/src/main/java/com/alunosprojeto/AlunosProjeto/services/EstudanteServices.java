@@ -8,6 +8,8 @@ import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import com.alunosprojeto.AlunosProjeto.domain.repository.UsuarioEstudanteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,10 +45,8 @@ public class EstudanteServices {
     }
 
 
-    public List<EstudanteDTODetalhes> buscarTodosEstudantes() {
-        List<Estudante> estudantes = estudanteRepository.findAll();
-        List<EstudanteDTODetalhes> estudanteDTO = estudantes.stream().map(EstudanteDTODetalhes::new).toList();
-        return estudanteDTO;
+    public Page<EstudanteDTODetalhes> buscarTodosEstudantes(Pageable paginacao) {
+       return estudanteRepository.findAll(paginacao).map(EstudanteDTODetalhes::new);
     }
 
     public Estudante buscarEstudantePorId(Long id) {
