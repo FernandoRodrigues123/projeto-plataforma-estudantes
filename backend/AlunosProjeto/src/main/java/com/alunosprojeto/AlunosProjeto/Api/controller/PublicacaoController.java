@@ -23,6 +23,7 @@ public class PublicacaoController {
     @Autowired
     private PublicacaoService service;
 
+
     @PostMapping("/{email}")
 
     public ResponseEntity<Publicacao> publicar(@RequestBody Publicacao publicacao, @PathVariable String email) {
@@ -30,6 +31,7 @@ public class PublicacaoController {
         if (validacao) {
             return ResponseEntity.ok(service.publicar(publicacao, email));
         } else {
+
            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
