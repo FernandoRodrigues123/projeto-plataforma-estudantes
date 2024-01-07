@@ -28,13 +28,13 @@ public class EstudanteServices {
     @Transactional
     public Estudante cadastrarEstudante(EstudanteDTO dados) {
 
-        Estudante estudante = new Estudante(dados);//converto meus dados DTO para minha entidade estudantes
-        estudanteRepository.save(estudante);// salvo ela
+        Estudante estudante = new Estudante(dados);
+        estudanteRepository.save(estudante);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // criptografando senha
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(dados.senha());
 
-        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();//crio uma entidade Usuario
+        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();
 
         usuarioEstudante.setLogin(dados.email());
         usuarioEstudante.setSenha(encode);
