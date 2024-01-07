@@ -1,0 +1,47 @@
+[33mcommit 832eb02c38208e00b15d5af24758d00513c620b3[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Your Name <you@example.com>
+Date:   Tue Aug 1 19:34:57 2023 -0300
+
+    adcionando sistema de autenticaçao basico
+
+[33mcommit 3acea2e674c083aa6cc6f8927c260355766148da[m
+Author: Your Name <you@example.com>
+Date:   Mon Jul 3 22:12:32 2023 -0300
+
+    adcionando Spring Security, criando configuraçcao inicia, login de estudante incrementado, e cadastro modificado
+
+[33mcommit 9418cc97aa9ece8472c4b7a35563c7bfca3e42b0[m
+Author: Your Name <you@example.com>
+Date:   Mon Jun 26 21:42:04 2023 -0300
+
+    crud basico estudantes
+
+[33mcommit 6cb82be929ed0d2a2848c1f4cb1ea03d56413721[m
+Author: Your Name <you@example.com>
+Date:   Sat Jun 24 18:52:06 2023 -0300
+
+    iniciando projeto backend, criando entidade Estudantes, conectando no banco de dados
+
+[33mcommit 7d302615f452f23352d663b4bc9120df3beeb25f[m
+Author: Your Name <you@example.com>
+Date:   Sun Jun 4 12:16:58 2023 -0300
+
+    arquivo modelagem de estudante
+
+[33mcommit 45e90836e953630258cf840746a4176b27cc6e2f[m
+Author: Your Name <you@example.com>
+Date:   Sat Jun 3 21:04:28 2023 -0300
+
+    adcionando diagrama de classe estudante
+
+[33mcommit 3b8c747eb1cade40e90223a6261dc265602db505[m
+Author: Your Name <you@example.com>
+Date:   Sat Jun 3 11:15:44 2023 -0300
+
+    primeiros requisitos, arquivo html basico
+
+[33mcommit dca50010808e60c5f84932ed787d33103f8a9df1[m
+Author: Your Name <you@example.com>
+Date:   Sat Jun 3 11:07:22 2023 -0300
+
+    adcionando README.md
