@@ -6,6 +6,7 @@ import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import com.alunosprojeto.AlunosProjeto.domain.repository.UsuarioEstudanteRepository;
+import com.alunosprojeto.AlunosProjeto.exception.EmailEmUso;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,22 +28,21 @@ public class EstudanteServices {
 
     @Transactional
     public Estudante cadastrarEstudante(EstudanteDTO dados) {
+        if(estudanteRepository.existsByEmail(dados.email())){
+            throw new EmailEmUso("email ja em uso");
+        }else {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String senhaCript = encoder.encode(dados.senha());
 
-        Estudante estudante = new Estudante(dados);
-        estudanteRepository.save(estudante);
+            Estudante estudante = new Estudante(dados);
+            UsuarioEstudante usuarioEstudante = new UsuarioEstudante(dados.email(), senhaCript);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encode = encoder.encode(dados.senha());
 
-        UsuarioEstudante usuarioEstudante = new UsuarioEstudante();
+            estudanteRepository.save(estudante);
+            usuarioEstudanteRepository.save(usuarioEstudante);
 
-        usuarioEstudante.setLogin(dados.email());
-        usuarioEstudante.setSenha(encode);
-
-        usuarioEstudanteRepository.save(usuarioEstudante);
-
-        return estudante;
-
+            return estudante;
+        }
     }
 
 
@@ -57,10 +57,15 @@ public class EstudanteServices {
     @Transactional
     public EstudanteDTODetalhes atualizarCadastroDeEstudante(EstudanteDTODetalhes estudanteDTO) {
 
+
+        if(estudanteRepository.existsByEmail(estudanteDTO.email())){
+            throw new EmailEmUso("email ja em uso");
+        }else {
         Estudante estudante = estudanteRepository.getReferenceById(estudanteDTO.id());
         estudante.atulizar(estudanteDTO);
 
         return new EstudanteDTODetalhes(estudante);
+        }
     }
 
     @Transactional
