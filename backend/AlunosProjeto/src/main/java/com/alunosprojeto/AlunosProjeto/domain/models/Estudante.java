@@ -2,6 +2,7 @@ package com.alunosprojeto.AlunosProjeto.domain.models;
 
 import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.UsuarioEstudanteDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,18 +19,23 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Estudante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     private String email;
-    private String senha;
+
     @Column(name = "data_de_nascimento")
     private LocalDate dataDeNascimento;
-    @Column(name = "area")
-    private String areaDeEstudos;
+
+
+    private String areaDeEstudo;
+
+    @Embedded
+    private UsuarioEstudante usuarioEstudante;
 
 //    @OneToMany(mappedBy = "estudante") isso aqui deu um erro trenebrozo, e sem isso funcionou perfeitamente
 //    private List<Publicacao> publicacoes;
@@ -38,14 +44,18 @@ public class Estudante {
     public Estudante(EstudanteDTO estudanteDTO) {
         this.nome = estudanteDTO.nome();
         this.dataDeNascimento = estudanteDTO.dataDeNascimento();
-        this.areaDeEstudos = estudanteDTO.areaDeEstudos();
+        this.areaDeEstudo = estudanteDTO.areaDeEstudo();
         this.email = estudanteDTO.email();
-        this.senha = estudanteDTO.senha();
+        UsuarioEstudanteDTO usuarioEstudanteDTO = estudanteDTO.usuarioEstudanteDTO();
+        this.usuarioEstudante = new UsuarioEstudante(usuarioEstudanteDTO.login(), usuarioEstudanteDTO.senha());
     }
 
     public void atulizar(EstudanteDTODetalhes estudanteDTO) {
-        if(nome != null) this.nome = estudanteDTO.nome();
-        if(dataDeNascimento != null) this.dataDeNascimento = estudanteDTO.dataDeNascimento();
-        if(areaDeEstudos != null) this.areaDeEstudos = estudanteDTO.areaDeEstudos();
+        if(estudanteDTO.nome() != null) this.nome = estudanteDTO.nome();
+        if(estudanteDTO.dataDeNascimento() != null) this.dataDeNascimento = estudanteDTO.dataDeNascimento();
+        if(estudanteDTO.areaDeEstudo() != null) this.areaDeEstudo = estudanteDTO.areaDeEstudo();
+        if(estudanteDTO.email() != null) this.email = estudanteDTO.email();
+        UsuarioEstudanteDTO usuarioEstudanteDTO = estudanteDTO.usuarioEstudanteDTO();
+        if(estudanteDTO.usuarioEstudanteDTO() != null) this.usuarioEstudante = new UsuarioEstudante(usuarioEstudanteDTO.login(), usuarioEstudanteDTO.senha());
     }
 }

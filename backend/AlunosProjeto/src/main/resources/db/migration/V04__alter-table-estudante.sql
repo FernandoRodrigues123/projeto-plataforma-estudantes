@@ -1,1 +1,0 @@
-ALTER TABLE estudantes add COLUMN (email varchar(50), senha varchar(255));

@@ -41,6 +41,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
     }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

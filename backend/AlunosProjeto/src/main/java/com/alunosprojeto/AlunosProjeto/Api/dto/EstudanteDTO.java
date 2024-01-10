@@ -1,6 +1,8 @@
 package com.alunosprojeto.AlunosProjeto.Api.dto;
 
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
+import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,19 +17,20 @@ public record EstudanteDTO(
         @NotNull
         LocalDate dataDeNascimento,
         @NotBlank
-        String areaDeEstudos,
+        String areaDeEstudo,
 
         @Email
         @NotBlank
         @NotNull
         String email,
-
-        @NotBlank
         @NotNull
-        String senha
+        @JsonAlias("usuario")
+        UsuarioEstudanteDTO usuarioEstudanteDTO
 
 ) {
         public EstudanteDTO(Estudante estudante) {
-                this( estudante.getNome(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudos(),estudante.getEmail(),estudante.getSenha());
+                this( estudante.getNome(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),estudante.getEmail(), new UsuarioEstudanteDTO(estudante.getUsuarioEstudante()));
         }
+
+
 }

@@ -1,6 +1,7 @@
 package com.alunosprojeto.AlunosProjeto.security;
 
-import com.alunosprojeto.AlunosProjeto.domain.repository.UsuarioEstudanteRepository;
+import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
+import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,17 +21,17 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenServices tokenServices;
 
     @Autowired
-    private UsuarioEstudanteRepository repository;
+    private EstudanteRepository repository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(request);
         var tokenJWT = getToken(request);
 
         if (tokenJWT != null) {
 
             String subject = tokenServices.getSubject(tokenJWT);
-            UserDetails usuarioEstudanteDetails = repository.findByLogin(subject);
+            Estudante estudante = repository.getByUsuarioEstudanteLogin(subject);
+            UserDetails usuarioEstudanteDetails = estudante.getUsuarioEstudante();
 
             var auticacao = new UsernamePasswordAuthenticationToken(usuarioEstudanteDetails, null, usuarioEstudanteDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auticacao);

@@ -6,7 +6,6 @@ import com.alunosprojeto.AlunosProjeto.Api.dto.TokenDTO;
 import com.alunosprojeto.AlunosProjeto.Api.dto.UsuarioEstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
-import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
 import com.alunosprojeto.AlunosProjeto.security.TokenServices;
 import com.alunosprojeto.AlunosProjeto.services.EstudanteServices;
 import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
@@ -21,12 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.alunosprojeto.AlunosProjeto.domain.repository.UsuarioEstudanteRepository;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/estudantes")
@@ -45,6 +41,7 @@ public class EstudanteController {
     public ResponseEntity<EstudanteDTODetalhes> cadastrarEstudante(@RequestBody @Valid EstudanteDTO dados, UriComponentsBuilder uriBuilder) {
 
         Estudante estudante = services.cadastrarEstudante(dados);
+
         var uri = uriBuilder.path("/estudante/{id}").buildAndExpand(estudante.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new EstudanteDTODetalhes(estudante));
@@ -63,7 +60,7 @@ public class EstudanteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<EstudanteDTODetalhes>> buscarTodosEstudantes(@PageableDefault(size = 10,sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<Page<EstudanteDTODetalhes>> buscarTodosEstudantes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return ResponseEntity.ok(services.buscarTodosEstudantes(paginacao));
     }
 
@@ -84,7 +81,7 @@ public class EstudanteController {
     @PutMapping
     @Transactional
 
-    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes estudanteDTO) {
+    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid() EstudanteDTODetalhes estudanteDTO) {
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(estudanteDTO.email());
         if (validacao) {
             return ResponseEntity.ok(services.atualizarCadastroDeEstudante(estudanteDTO));
@@ -92,17 +89,18 @@ public class EstudanteController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping
     @Transactional
-    public ResponseEntity deletarCadastroEstudante(@PathVariable String email) {
+    public ResponseEntity deletarCadastroEstudante(@RequestBody @Valid UsuarioEstudanteDTO dto) {
+        UsuarioEstudante usuarioEstudante = UsuarioEstudanteServices.pegaUsuarioEstudante();
 
-        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(email);
-        if (!validacao) {
-            ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (usuarioEstudante.getLogin().equals(dto.login()) && usuarioEstudante.getSenha().equals(dto.senha())) {
+            services.deletarCadastroEstudante(usuarioEstudante);
+            return ResponseEntity.noContent().build();
+
+        } else {
+         return    ResponseEntity.badRequest().body("não foi possivel realizar remoção de usuario, dados invalidos");
         }
-        services.deletarCadastroEstudante(email);
-        return ResponseEntity.noContent().build();
-
     }
 
 }

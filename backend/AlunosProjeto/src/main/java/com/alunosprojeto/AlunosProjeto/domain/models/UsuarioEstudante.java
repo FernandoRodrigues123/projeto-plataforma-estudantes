@@ -12,17 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "usuarios_estudantes")
-@Entity(name = "UsuarioEstudante")
+
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 public class UsuarioEstudante implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String login;
 

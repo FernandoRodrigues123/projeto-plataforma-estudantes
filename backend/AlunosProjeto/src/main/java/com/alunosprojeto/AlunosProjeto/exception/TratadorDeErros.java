@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class TratadorDeErros {
 
-    @ExceptionHandler(EmailEmUso.class)
-    public  ResponseEntity trataEmailEmUso(){
+    @ExceptionHandler(EmailEmUsoException.class)
+    public ResponseEntity trataEmailEmUso() {
         return ResponseEntity.badRequest().body("email em uso");
     }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarErro404() {
         return ResponseEntity.notFound().build();
@@ -28,7 +29,7 @@ public class TratadorDeErros {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarError400(MethodArgumentNotValidException ex) {
         var erros = ex.getFieldErrors();
-        return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
+        return ResponseEntity.badRequest().body("email errado " + erros.stream().map(DadosErroValidacao::new).toList());
 
     }
 
@@ -59,6 +60,7 @@ public class TratadorDeErros {
 
     private record DadosErroValidacao(String campo, String msg) {
         public DadosErroValidacao(FieldError erro) {
+
             this(erro.getField(), erro.getDefaultMessage());
         }
 

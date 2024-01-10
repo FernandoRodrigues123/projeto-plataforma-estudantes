@@ -1,1 +1,0 @@
-ALTER TABLE  usuarios_estudantes MODIFY COLUMN id INT AUTO_INCREMENT;
