@@ -1,12 +1,10 @@
-package com.alunosprojeto.AlunosProjeto.Api.dto;
+package com.alunosprojeto.AlunosProjeto.Api.dto.estudante;
 
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
-import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 

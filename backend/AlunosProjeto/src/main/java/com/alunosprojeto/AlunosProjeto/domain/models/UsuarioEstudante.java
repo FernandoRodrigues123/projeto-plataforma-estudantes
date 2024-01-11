@@ -1,10 +1,8 @@
 package com.alunosprojeto.AlunosProjeto.domain.models;
 
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"login", "senha"})
 @Embeddable
 public class UsuarioEstudante implements UserDetails {
 
@@ -25,9 +24,14 @@ public class UsuarioEstudante implements UserDetails {
 
     private String senha;
 
-    public UsuarioEstudante(String login, String senhaCript) {
+    public UsuarioEstudante(String login, String senha) {
         this.login = login;
-        this.senha = senhaCript;
+        this.senha = senha;
+    }
+
+    public UsuarioEstudante(UsuarioEstudanteDTO usuarioDados) {
+        this.login = usuarioDados.login();
+        this.senha = usuarioDados.senha();
     }
 
     @Override
@@ -64,4 +68,5 @@ public class UsuarioEstudante implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

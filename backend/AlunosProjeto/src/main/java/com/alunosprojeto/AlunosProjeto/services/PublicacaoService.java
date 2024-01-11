@@ -15,8 +15,8 @@ public class PublicacaoService {
     private PublicacaoRepository repository;
     @Autowired
     private EstudanteServices estudanteServices;
-    public Publicacao publicar(Publicacao publicacao, String email){
-        Estudante estudante = estudanteServices.buscarEstudantePorEmail(email);
+    public Publicacao publicar(Publicacao publicacao, String login){
+        Estudante estudante = estudanteServices.buscarEstudantePorLogin(login);
         publicacao.setEstudante(estudante);
         return repository.save(publicacao);
     }

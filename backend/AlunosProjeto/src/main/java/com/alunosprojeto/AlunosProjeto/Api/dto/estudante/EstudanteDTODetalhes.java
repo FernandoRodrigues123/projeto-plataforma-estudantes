@@ -1,7 +1,6 @@
-package com.alunosprojeto.AlunosProjeto.Api.dto;
+package com.alunosprojeto.AlunosProjeto.Api.dto.estudante;
 
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
-import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.alunosprojeto.AlunosProjeto.Api.dto;
+package com.alunosprojeto.AlunosProjeto.Api.dto.estudante;
 
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import jakarta.validation.constraints.Email;
@@ -17,4 +17,5 @@ public record UsuarioEstudanteDTO(
         public UsuarioEstudanteDTO(UsuarioEstudante usuarioEstudante) {
                 this(usuarioEstudante.getLogin(), usuarioEstudante.getSenha());
         }
+
 }

@@ -1,17 +1,15 @@
 package com.alunosprojeto.AlunosProjeto.domain.models;
 
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTO;
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTODetalhes;
-import com.alunosprojeto.AlunosProjeto.Api.dto.UsuarioEstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Table(name = "estudantes")
 @Entity(name = "Estudante")

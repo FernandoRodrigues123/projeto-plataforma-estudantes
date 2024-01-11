@@ -1,9 +1,10 @@
 package com.alunosprojeto.AlunosProjeto.Api.controller;
 
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTO;
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTODetalhes;
-import com.alunosprojeto.AlunosProjeto.Api.dto.TokenDTO;
-import com.alunosprojeto.AlunosProjeto.Api.dto.UsuarioEstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.*;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTOLeitura;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.security.TokenServices;
@@ -60,47 +61,39 @@ public class EstudanteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<EstudanteDTODetalhes>> buscarTodosEstudantes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        return ResponseEntity.ok(services.buscarTodosEstudantes(paginacao));
+    public ResponseEntity<Page<EstudanteDTOLeitura>> buscarTodosEstudantes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+        return ResponseEntity.ok(services.buscarTodosEstudantes(paginacao).map(EstudanteDTOLeitura::new));
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<EstudanteDTODetalhes> buscaPorEmail(@PathVariable String email) {
-        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(email);
+    @GetMapping("/{nome}")
+    public ResponseEntity<Page<EstudanteDTOLeitura>> buscaPorNome(@PageableDefault(size = 10) Pageable paginacao, @PathVariable String nome) {
 
-        if (validacao) {
-            Estudante estudante = services.buscarEstudantePorEmail(email);
-            return ResponseEntity.ok(new EstudanteDTODetalhes(estudante));
-
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        Page<Estudante> estudantes = services.buscarEstudantePorNome(paginacao, nome);
+        Page<EstudanteDTOLeitura> estudantesDTOLeitura = estudantes.map(EstudanteDTOLeitura::new);
+        return ResponseEntity.ok(estudantesDTOLeitura);
 
     }
 
     @PutMapping
     @Transactional
-
-    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid() EstudanteDTODetalhes estudanteDTO) {
-        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloEmail(estudanteDTO.email());
+    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes dadosNovos,@RequestBody @Valid UsuarioEstudanteDTO usuarioDados) {
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloUsuario(new UsuarioEstudante(usuarioDados));
         if (validacao) {
-            return ResponseEntity.ok(services.atualizarCadastroDeEstudante(estudanteDTO));
+            return ResponseEntity.ok(services.atualizarCadastroDeEstudante(dadosNovos));
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @DeleteMapping
     @Transactional
-    public ResponseEntity deletarCadastroEstudante(@RequestBody @Valid UsuarioEstudanteDTO dto) {
-        UsuarioEstudante usuarioEstudante = UsuarioEstudanteServices.pegaUsuarioEstudante();
-
-        if (usuarioEstudante.getLogin().equals(dto.login()) && usuarioEstudante.getSenha().equals(dto.senha())) {
+    public ResponseEntity deletarCadastroEstudante(@RequestBody @Valid UsuarioEstudanteDTO usuarioDados) {
+        UsuarioEstudante usuarioEstudante = new UsuarioEstudante(usuarioDados);
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloUsuario(usuarioEstudante);
+        if (validacao) {
             services.deletarCadastroEstudante(usuarioEstudante);
             return ResponseEntity.noContent().build();
-
-        } else {
-         return    ResponseEntity.badRequest().body("não foi possivel realizar remoção de usuario, dados invalidos");
         }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
 }

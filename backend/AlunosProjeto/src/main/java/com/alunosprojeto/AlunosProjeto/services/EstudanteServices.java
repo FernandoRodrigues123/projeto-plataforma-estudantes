@@ -1,7 +1,7 @@
 package com.alunosprojeto.AlunosProjeto.services;
 
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTO;
-import com.alunosprojeto.AlunosProjeto.Api.dto.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
@@ -39,8 +39,8 @@ public class EstudanteServices {
     }
 
 
-    public Page<EstudanteDTODetalhes> buscarTodosEstudantes(Pageable paginacao) {
-       return estudanteRepository.findAll(paginacao).map(EstudanteDTODetalhes::new);
+    public Page<Estudante> buscarTodosEstudantes(Pageable paginacao) {
+       return estudanteRepository.findAll(paginacao);
     }
 
     @Transactional
@@ -67,5 +67,13 @@ public class EstudanteServices {
 
     public Estudante buscarEstudantePorEmail(String email) {
         return estudanteRepository.findByEmail(email);
+    }
+
+    public Page<Estudante> buscarEstudantePorNome(Pageable pageable, String nome) {
+         return estudanteRepository.findAllByNome(pageable,nome);
+    }
+
+    public Estudante buscarEstudantePorLogin(String login) {
+        return estudanteRepository.getByUsuarioEstudanteLogin(login);
     }
 }
