@@ -12,7 +12,7 @@ public record EstudanteDTO(
 
         @NotBlank
         String nome,
-        @NotNull
+        @NotNull(message = "data de nascimento")
         LocalDate dataDeNascimento,
         @NotBlank
         String areaDeEstudo,
@@ -21,7 +21,7 @@ public record EstudanteDTO(
         @NotBlank
         @NotNull
         String email,
-        @NotNull
+        @NotNull(message = "usuario")
         @JsonAlias("usuario")
         UsuarioEstudanteDTO usuarioEstudanteDTO
 

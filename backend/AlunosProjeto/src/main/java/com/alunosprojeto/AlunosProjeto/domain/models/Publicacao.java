@@ -1,5 +1,8 @@
 package com.alunosprojeto.AlunosProjeto.domain.models;
 
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.publicacao.PublicacaoDTOAtualizar;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +26,12 @@ public class Publicacao {
     @ManyToOne
     @JoinColumn(name = "estudante_id", nullable = false)
     private Estudante estudante;
+
+    public void atualizar(PublicacaoDTOAtualizar dados) {
+        if(dados.titulo() != null) this.titulo = dados.titulo();
+        if(dados.corpo() != null) this.corpo = dados.corpo();
+        if(dados.referencia() != null) this.referencias = dados.referencia();
+    }
+
+
 }

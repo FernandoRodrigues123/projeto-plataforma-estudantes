@@ -1,18 +1,26 @@
-async function loginRequest(login, senha) {
+async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo,email, login, senha) {
     try {
-        const response = await fetch("https://localhost:8443/estudantes/login", {
+        const response = await fetch("http://localhost:8080/estudantes/cadastro", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 
             },
             body: JSON.stringify({
-                login: login,
+                nome: nome,
+                dataDeNascimento: dataDeNascimento,
+                areaDeEstudo: areaDeEstudo,
+                email: email,
+                usuario:{
+                    login: login,
                 senha: senha,
+                }
+
             }),
         });
 
         if (!response.ok) {
+            console.log(response);
             throw new Error(`Erro na requisição: ${response.status}`);
         }
         
@@ -24,4 +32,4 @@ async function loginRequest(login, senha) {
     }
 }
 
-export default loginRequest;
+export default cadastroRequest;

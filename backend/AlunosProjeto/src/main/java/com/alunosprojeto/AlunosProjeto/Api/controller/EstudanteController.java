@@ -74,10 +74,10 @@ public class EstudanteController {
 
     }
 
-    @PutMapping
+    @PutMapping("/{login}")
     @Transactional
-    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes dadosNovos,@RequestBody @Valid UsuarioEstudanteDTO usuarioDados) {
-        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloUsuario(new UsuarioEstudante(usuarioDados));
+    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes dadosNovos,@PathVariable String login) {
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
             return ResponseEntity.ok(services.atualizarCadastroDeEstudante(dadosNovos));
         }

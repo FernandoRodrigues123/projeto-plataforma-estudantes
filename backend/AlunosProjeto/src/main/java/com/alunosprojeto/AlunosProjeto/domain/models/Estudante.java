@@ -48,7 +48,7 @@ public class Estudante {
         this.usuarioEstudante = new UsuarioEstudante(usuarioEstudanteDTO.login(), usuarioEstudanteDTO.senha());
     }
 
-    public void atulizar(EstudanteDTODetalhes estudanteDTO) {
+    public void atualizar(EstudanteDTODetalhes estudanteDTO) {
         if(estudanteDTO.nome() != null) this.nome = estudanteDTO.nome();
         if(estudanteDTO.dataDeNascimento() != null) this.dataDeNascimento = estudanteDTO.dataDeNascimento();
         if(estudanteDTO.areaDeEstudo() != null) this.areaDeEstudo = estudanteDTO.areaDeEstudo();

@@ -1,5 +1,5 @@
 async function postLogin(login, senha) {
-    const response = await fetch("https://localhost:8443/estudantes/login", {
+    const response = await fetch("http://api.unialunos:8080/estudantes/login", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({

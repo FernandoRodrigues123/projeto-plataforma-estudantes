@@ -2,23 +2,30 @@ import CampoTexto from '../CampoTexto/CampoTexto';
 import Botao from '../Botao/Botao';
 import './login.css';
 import { useState } from 'react';
-import loginRequest from '../../request/loginRequest';
+import loginRequest from '../../request/usuarioRequests/loginRequest';
+import { useContext } from 'react';
+import { Context } from '../../App.js';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const nav = useNavigate();
+    const ctx = useContext(Context)
+
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
 
     const aoClicarNoBotao = (evento) => {
         evento.preventDefault();
-        console.log(login + " "+ senha)
-        salva(login, senha);
+        enviar(login, senha);
     }
 
-    const salva = (login, senha) => {
+
+    const enviar = (login, senha) => {
         loginRequest(login, senha).then(response => {
-            const tokenJWT = response.tokenJWT;
-            console.log('Token JWT:', tokenJWT);
-        })
+            ctx.setToken(response.tokenJWT);
+            nav('/home')
+            }   
+        )
     }
 
     return (
@@ -26,10 +33,12 @@ const Login = () => {
             <form onSubmit={aoClicarNoBotao}>
                 <CampoTexto valor={login} aoAlterado={valor => setLogin(valor)} placeholder='login' label='login'></CampoTexto>
                 <CampoTexto valor={senha} aoAlterado={valor => setSenha(valor)} placeholder='senha' label='senha'></CampoTexto>
-                <Botao texto='Login' aoClicar={aoClicarNoBotao}></Botao>
+                <Botao texto='login' aoClicar={aoClicarNoBotao}></Botao>
             </form>
         </section>
     );
 }
 
+
 export default Login;
+

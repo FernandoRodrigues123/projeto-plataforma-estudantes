@@ -53,7 +53,7 @@ public class EstudanteServices {
             throw new EmailEmUsoException("email ja em uso");
         }else {
         Estudante estudante = estudanteRepository.getReferenceById(dados.id());
-        estudante.atulizar(dados);
+        estudante.atualizar(dados);
 
         return new EstudanteDTODetalhes(estudante);
         }
