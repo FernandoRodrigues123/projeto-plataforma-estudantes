@@ -1,5 +1,6 @@
 
 import './App.css';
+import { AuthProvider, Context } from './Context/AuthProvider.js';
 import Home from './componentes/Home/Home.js';
 import Login from './componentes/Login/Login.js';
 import { createContext, useState } from 'react';
@@ -8,14 +9,14 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 
 
 
-export const Context = createContext();
+
 function App() {
   const [token, setToken] = useState('');
 
 
   return (
 
-    <Context.Provider value={{ token, setToken }}>
+   <AuthProvider>
       <Router>
         <Routes>
           <Route path="/home" element={<Home />} />
@@ -23,7 +24,7 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
         </Routes>
       </Router>
-    </Context.Provider>
+      </AuthProvider>
 
   );
 
