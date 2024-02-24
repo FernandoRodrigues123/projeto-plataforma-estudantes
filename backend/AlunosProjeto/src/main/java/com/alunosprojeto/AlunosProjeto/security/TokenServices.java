@@ -36,7 +36,14 @@ public class TokenServices {
         }
     }
 
+
     private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of(("-03:00")));
+    }
+
+
+    public String  gerarTokenComLogin(String login) {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        return JWT.create().withIssuer("api-estudantes.com").withSubject(login).withExpiresAt(dataExpiracao()).sign(algorithm);
     }
 }

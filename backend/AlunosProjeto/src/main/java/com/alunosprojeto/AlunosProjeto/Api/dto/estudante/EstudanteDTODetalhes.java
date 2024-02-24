@@ -1,13 +1,15 @@
 package com.alunosprojeto.AlunosProjeto.Api.dto.estudante;
 
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+
 public record EstudanteDTODetalhes(
 
-        @NotNull
+
         Long id,
         String nome,
 
@@ -16,6 +18,7 @@ public record EstudanteDTODetalhes(
         LocalDate dataDeNascimento,
         String areaDeEstudo,
 
+        @JsonProperty(value = "usuario")
         UsuarioEstudanteDTO usuarioEstudanteDTO
 
 ) {

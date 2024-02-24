@@ -1,15 +1,13 @@
 package com.alunosprojeto.AlunosProjeto.Api.controller;
 
 import com.alunosprojeto.AlunosProjeto.Api.dto.*;
-import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
-import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
-import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTOLeitura;
-import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.*;
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.security.TokenServices;
 import com.alunosprojeto.AlunosProjeto.services.EstudanteServices;
 import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +63,16 @@ public class EstudanteController {
         return ResponseEntity.ok(services.buscarTodosEstudantes(paginacao).map(EstudanteDTOLeitura::new));
     }
 
-    @GetMapping("/{nome}")
+    @GetMapping("/{login}")
+    public ResponseEntity<EstudanteDTOLeitura> buscaEstudantePorLogin(@PathVariable String login){
+
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
+        if (validacao) {
+            return ResponseEntity.ok(new EstudanteDTOLeitura(services.buscarEstudantePorLogin( login)));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+    @GetMapping("/s/{nome}")
     public ResponseEntity<Page<EstudanteDTOLeitura>> buscaPorNome(@PageableDefault(size = 10) Pageable paginacao, @PathVariable String nome) {
 
         Page<Estudante> estudantes = services.buscarEstudantePorNome(paginacao, nome);
@@ -76,24 +83,27 @@ public class EstudanteController {
 
     @PutMapping("/{login}")
     @Transactional
-    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTODetalhes dadosNovos,@PathVariable String login) {
+    public ResponseEntity atualizarCadastroDeEstudante(@RequestBody @Valid EstudanteDTOLeituraSemPublicacaoEUsuario dadosNovos, @PathVariable String login) {
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
-            return ResponseEntity.ok(services.atualizarCadastroDeEstudante(dadosNovos));
+            return ResponseEntity.ok(services.atualizarCadastroDeEstudante(dadosNovos, login));
         }
+        System.out.println("deu pau aq");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @DeleteMapping
     @Transactional
     public ResponseEntity deletarCadastroEstudante(@RequestBody @Valid UsuarioEstudanteDTO usuarioDados) {
-        UsuarioEstudante usuarioEstudante = new UsuarioEstudante(usuarioDados);
-        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloUsuario(usuarioEstudante);
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(usuarioDados.login());
         if (validacao) {
-            services.deletarCadastroEstudante(usuarioEstudante);
+            services.deletarCadastroEstudante(usuarioDados);
             return ResponseEntity.noContent().build();
         }
+
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
-
 }
+
+
+

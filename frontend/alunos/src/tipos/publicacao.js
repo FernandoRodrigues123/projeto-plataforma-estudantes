@@ -1,4 +1,3 @@
-
 export const publicacao = {
     id: Number,
     titulo: '',
@@ -10,6 +9,11 @@ export const publicacao = {
       dataDeNascimento: new Date(),
       areaDeEstudo: '',
     },
+  };
+  export const publicacaoBase= {
+    titulo: '',
+    corpo: '',
+    referencias: ''
   };
   export const publicacaoPagina = {
     content: [publicacao],

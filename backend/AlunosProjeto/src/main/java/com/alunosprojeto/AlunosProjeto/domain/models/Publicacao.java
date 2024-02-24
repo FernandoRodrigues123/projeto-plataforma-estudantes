@@ -28,9 +28,9 @@ public class Publicacao {
     private Estudante estudante;
 
     public void atualizar(PublicacaoDTOAtualizar dados) {
-        if(dados.titulo() != null) this.titulo = dados.titulo();
-        if(dados.corpo() != null) this.corpo = dados.corpo();
-        if(dados.referencia() != null) this.referencias = dados.referencia();
+        if(dados.titulo() != null && dados.titulo().isBlank() == false) this.titulo = dados.titulo();
+        if(dados.corpo() != null  && dados.corpo().isBlank() == false) this.corpo = dados.corpo();
+        if(dados.referencia() != null  && dados.referencia().isBlank() == false) this.referencias = dados.referencia();
     }
 
 

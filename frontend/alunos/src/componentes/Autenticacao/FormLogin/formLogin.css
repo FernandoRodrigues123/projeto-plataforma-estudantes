@@ -1,0 +1,28 @@
+.sessao-form {
+    display: flex;
+    width: 40%;
+    margin-top: 75px;
+    margin-bottom: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #55788B;
+    border-radius: 10px;
+}
+
+.contem-botoes {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}       

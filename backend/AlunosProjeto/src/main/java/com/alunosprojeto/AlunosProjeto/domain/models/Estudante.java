@@ -2,14 +2,13 @@ package com.alunosprojeto.AlunosProjeto.domain.models;
 
 import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTOLeituraSemPublicacaoEUsuario;
 import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "estudantes")
 @Entity(name = "Estudante")
@@ -17,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Estudante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +35,8 @@ public class Estudante {
     @Embedded
     private UsuarioEstudante usuarioEstudante;
 
-//    @OneToMany(mappedBy = "estudante") isso aqui deu um erro trenebrozo, e sem isso funcionou perfeitamente
-//    private List<Publicacao> publicacoes;
+    @OneToMany(mappedBy = "estudante")
+    private List<Publicacao> publicacoes;
 
 
     public Estudante(EstudanteDTO estudanteDTO) {
@@ -48,12 +48,14 @@ public class Estudante {
         this.usuarioEstudante = new UsuarioEstudante(usuarioEstudanteDTO.login(), usuarioEstudanteDTO.senha());
     }
 
-    public void atualizar(EstudanteDTODetalhes estudanteDTO) {
-        if(estudanteDTO.nome() != null) this.nome = estudanteDTO.nome();
-        if(estudanteDTO.dataDeNascimento() != null) this.dataDeNascimento = estudanteDTO.dataDeNascimento();
-        if(estudanteDTO.areaDeEstudo() != null) this.areaDeEstudo = estudanteDTO.areaDeEstudo();
-        if(estudanteDTO.email() != null) this.email = estudanteDTO.email();
-        UsuarioEstudanteDTO usuarioEstudanteDTO = estudanteDTO.usuarioEstudanteDTO();
-        if(estudanteDTO.usuarioEstudanteDTO() != null) this.usuarioEstudante = new UsuarioEstudante(usuarioEstudanteDTO.login(), usuarioEstudanteDTO.senha());
+    public void atualizar(EstudanteDTOLeituraSemPublicacaoEUsuario estudanteDTO) {
+        if (estudanteDTO.nome() != null && estudanteDTO.nome().isBlank() != true) this.nome = estudanteDTO.nome();
+        if (estudanteDTO.dataDeNascimento() != null )
+            this.dataDeNascimento = estudanteDTO.dataDeNascimento();
+        if (estudanteDTO.areaDeEstudo() != null && estudanteDTO.areaDeEstudo().isBlank() != true)
+            this.areaDeEstudo = estudanteDTO.areaDeEstudo();
+        if (estudanteDTO.email() != null && estudanteDTO.email().isBlank() != true) this.email = estudanteDTO.email();
     }
+
+
 }

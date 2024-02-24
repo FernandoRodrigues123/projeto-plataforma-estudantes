@@ -1,45 +1,57 @@
 import './home.css';
-import { Context } from '../../App';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BuscaTodasPublicacoesRequest from '../../request/PublicacoesRequest/buscaTodasPublicacoesRequest';
 import { publicacaoPagina } from '../../tipos/publicacao';
-import Paginacao from '../Paginacao/Paginacao';
-import PublicacaoCard from '../PublicacaoCard/PublicacaoCard'
+import Paginacao from '../Publicacao/Paginacao/Paginacao.js';
+import PublicacaoCard from '../Publicacao/PublicacaoCard/PublicacaoCard.js'
 
 const Home = () => {
     const [numeroPagina, setNumeroPagina] = useState(0);
     const [pagina, setPagina] = useState(publicacaoPagina);
-    const context = useContext(Context);
+    const token = localStorage.getItem('token');
 
+    const fetchData = async (numeroPagina) => {
+        try {
+            if (token != null) {
+                console.log(token);
+                const data = await BuscaTodasPublicacoesRequest(token, numeroPagina);
+                setPagina(data);
+            } else {
+                console.log("Token é nulo. Aguardando 2 segundos...");
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                console.log("Continuando a execução após a espera");
+                await fetchData(numeroPagina); // Chame a função novamente após a espera
+            }
+        } catch (error) {
+            console.error("Erro ao buscar dados:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            console.log(context.token);
-            await BuscaTodasPublicacoesRequest(context.token).then(data => {
-                setPagina(data);    
-                }
-            )
-        };
-        fetchData();
+        fetchData(numeroPagina); // Adicione a dependência numeroPagina
+    }, [numeroPagina, token]); // Adicione token como dependência
 
-    }, [context.token]);
-        const handlePageChange = (novoNumeroDePaginas) => {
-            setNumeroPagina(novoNumeroDePaginas);
-    }
+    const handlePageChange = async (novoNumeroDePaginas) => {
+        await setNumeroPagina(novoNumeroDePaginas);
+    };
 
     return (
-        <div>
-            <Paginacao page={pagina} onChange={handlePageChange} />
+        <div className='contem-pagina'>
+            <Paginacao page={pagina} onChange={handlePageChange} value={numeroPagina} />
+
             <div>
-                <div>
-                    {pagina.content.map(pub => (
-                        <div key={pub.id}>
-                            <PublicacaoCard publicacao={pub}></PublicacaoCard>
-                        </div>
-                    )
-                    )}
+                <div className='pagina'>
+                    <div className='publicacoes'>
+                        {pagina.content.map(pub => (
+                            <div className='publicacao' key={pub.id}>
+                                <PublicacaoCard publicacao={pub}></PublicacaoCard>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
+
+            <Paginacao page={pagina} onChange={handlePageChange} value={numeroPagina} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
-async function BuscaTodasPublicacoesRequest(token) {
+async function BuscaTodasPublicacoesRequest(token,numeroPagina) {
     try {
-        const response = await fetch("http://localhost:8080/publicacoes", {
+        const response = await fetch("http://localhost:8080/publicacoes?page="+ numeroPagina, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -13,14 +13,14 @@ async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo,email, login
                 email: email,
                 usuario:{
                     login: login,
-                senha: senha,
+                    senha: senha,
                 }
 
             }),
         });
 
         if (!response.ok) {
-            console.log(response);
+            console.log(nome + " "+ dataDeNascimento +  " "+  areaDeEstudo +" "+  email +" "+  login +" "+  senha);
             throw new Error(`Erro na requisição: ${response.status}`);
         }
         

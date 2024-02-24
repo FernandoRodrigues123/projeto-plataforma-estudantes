@@ -37,9 +37,10 @@ public class PublicacaoController {
 
 
     @PutMapping("/{login}/{id}")
-    public ResponseEntity<PublicacaoDTOLeitura> atualizarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id, PublicacaoDTOAtualizar dadosNovos){
+    public ResponseEntity<PublicacaoDTOLeitura> atualizarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id, @RequestBody PublicacaoDTOAtualizar dadosNovos){
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
+            System.out.println(dadosNovos);
             return ResponseEntity.ok(new PublicacaoDTOLeitura(service.atualizarPublicacao(id, dadosNovos)));
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

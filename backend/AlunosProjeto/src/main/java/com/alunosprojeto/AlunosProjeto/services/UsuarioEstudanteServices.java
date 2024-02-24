@@ -24,18 +24,16 @@ public class UsuarioEstudanteServices implements UserDetailsService {
     }
 
     public static boolean verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(String loginRecebido){
+        String senha = pegaUsuarioEstudante().getSenha();
         String login = pegaUsuarioEstudante().getLogin();//pega os dados do usuario altenticado,  e  pega o id do mesmo
 
         if (loginRecebido.equals(login)) return true;
         else return false;
     }
-    public static boolean verificaUsuarioEstaTentandoAcessarProprioPerfilPeloUsuario(UsuarioEstudante usuarioAValidar) {
-        UsuarioEstudante usuarioEstudante = pegaUsuarioEstudante();
-        if(usuarioEstudante.equals(usuarioAValidar))return true;
-        return false;
-    }
+
     public static UsuarioEstudante pegaUsuarioEstudante(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
        return ((UsuarioEstudante) authentication.getPrincipal());
 
     }

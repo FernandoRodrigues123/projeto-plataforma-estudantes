@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class TratadorDeErros {
 
-    @ExceptionHandler(EmailEmUsoException.class)
-    public ResponseEntity trataEmailEmUso(EmailEmUsoException ex) {
+    @ExceptionHandler(EmUsoException.class)
+    public ResponseEntity trataEmailEmUso(EmUsoException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

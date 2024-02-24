@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface EstudanteRepository extends JpaRepository<Estudante,Long> {
     Estudante findByEmail(String email);
@@ -26,4 +24,6 @@ public interface EstudanteRepository extends JpaRepository<Estudante,Long> {
 
     Estudante getByUsuarioEstudanteLogin(String username);
 
+    @Query("SELECT e FROM Estudante e WHERE e.usuarioEstudante.login = :login AND e.usuarioEstudante.senha = :senha")
+    Estudante getByUsuarioEstudanteLoginAndSenha(@Param("login") String login, @Param("senha")String senha);
 }

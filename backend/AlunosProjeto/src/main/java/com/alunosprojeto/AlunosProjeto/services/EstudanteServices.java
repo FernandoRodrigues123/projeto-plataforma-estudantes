@@ -2,11 +2,16 @@ package com.alunosprojeto.AlunosProjeto.services;
 
 import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTODetalhes;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.EstudanteDTOLeituraSemPublicacaoEUsuario;
+import com.alunosprojeto.AlunosProjeto.Api.dto.estudante.UsuarioEstudanteDTO;
 import com.alunosprojeto.AlunosProjeto.domain.models.Estudante;
 import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.domain.repository.EstudanteRepository;
-import com.alunosprojeto.AlunosProjeto.exception.EmailEmUsoException;
+import com.alunosprojeto.AlunosProjeto.domain.repository.PublicacaoRepository;
+import com.alunosprojeto.AlunosProjeto.exception.DadosIncorretos;
+import com.alunosprojeto.AlunosProjeto.exception.EmUsoException;
 
+import com.alunosprojeto.AlunosProjeto.verificacoes.VerificacoesEstudante.VerificaEstudante;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,55 +19,68 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EstudanteServices {
 
     @Autowired
     private EstudanteRepository estudanteRepository;
 
+    @Autowired
+    private List<VerificaEstudante> verificacoes;
+    @Autowired
+    private PublicacaoRepository publicacaoRepository;
+
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Transactional
     public Estudante cadastrarEstudante(EstudanteDTO dados) {
-        if(estudanteRepository.existsByEmail(dados.email())){
-            throw new EmailEmUsoException("email ja em uso");
-        } else if (estudanteRepository.existsByUsuarioEstudanteLogin(dados.usuarioEstudanteDTO().login())) {
-            throw new EmailEmUsoException("login ja em uso");
-        } else {
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String senhaCript = encoder.encode(dados.usuarioEstudanteDTO().senha());
+        verificacoes.forEach(v -> v.verificar(dados, estudanteRepository));
 
-                Estudante estudante = new Estudante(dados);
-                estudante.getUsuarioEstudante().setSenha(senhaCript);
-                estudanteRepository.save(estudante);
+        String senhaCript = encoder.encode(dados.usuarioEstudanteDTO().senha());
 
-                return estudante;
-            }
+        Estudante estudante = new Estudante(dados);
+        estudante.getUsuarioEstudante().setSenha(senhaCript);
+        estudanteRepository.save(estudante);
+
+        return estudante;
     }
+
+
 
 
     public Page<Estudante> buscarTodosEstudantes(Pageable paginacao) {
-       return estudanteRepository.findAll(paginacao);
+        return estudanteRepository.findAll(paginacao);
     }
 
     @Transactional
-    public EstudanteDTODetalhes atualizarCadastroDeEstudante(EstudanteDTODetalhes dados) {
+    public Estudante atualizarCadastroDeEstudante(EstudanteDTOLeituraSemPublicacaoEUsuario dados, String login) {
+        Estudante estudante = estudanteRepository.getByUsuarioEstudanteLogin(login);
 
+        boolean mesmoEmail = estudante.getEmail().equals(dados.email());
 
-        if(estudanteRepository.existsByEmail(dados.email())){
-            throw new EmailEmUsoException("email ja em uso");
-        }if(estudanteRepository.existsByUsuarioEstudanteLogin(dados.usuarioEstudanteDTO().login())){
-            throw new EmailEmUsoException("email ja em uso");
-        }else {
-        Estudante estudante = estudanteRepository.getReferenceById(dados.id());
+        if (mesmoEmail == false) {
+            if (estudanteRepository.existsByEmail(dados.email())) throw new EmUsoException("email ja em uso");
+        }
+
         estudante.atualizar(dados);
 
-        return new EstudanteDTODetalhes(estudante);
-        }
+
+        return estudante;
     }
 
     @Transactional
-    public void deletarCadastroEstudante(UsuarioEstudante usuarioEstudante) { // se o jpa hibernate e mysql entenderem que o usuario estudante e um par de colunas ele vai fazer o delete pelo
-                                                                                // proprio usuario estudante, caso nao devemos implementa a exclusao pelas campos referentes
-        estudanteRepository.deleteByUsuarioEstudante(usuarioEstudante);
+    public void deletarCadastroEstudante(UsuarioEstudanteDTO usuarioEstudanteDTO) {
+
+        Estudante estudante = estudanteRepository.getByUsuarioEstudanteLogin(usuarioEstudanteDTO.login());
+        boolean validacao = encoder.matches(usuarioEstudanteDTO.senha(), estudante.getUsuarioEstudante().getSenha());
+
+        if(validacao) {
+            publicacaoRepository.deleteByEstudante(estudante.getId());
+            estudanteRepository.deleteById(estudante.getId());
+        }
+        else throw new DadosIncorretos("login ou senha incorretos ");
     }
 
     public Estudante buscarEstudantePorEmail(String email) {
@@ -70,10 +88,12 @@ public class EstudanteServices {
     }
 
     public Page<Estudante> buscarEstudantePorNome(Pageable pageable, String nome) {
-         return estudanteRepository.findAllByNome(pageable,nome);
+        return estudanteRepository.findAllByNome(pageable, nome);
     }
 
-    public Estudante buscarEstudantePorLogin(String login) {
-        return estudanteRepository.getByUsuarioEstudanteLogin(login);
+    public Estudante buscarEstudantePorLogin( String login) {
+        Estudante es = estudanteRepository.getByUsuarioEstudanteLogin(login);
+        return es;
     }
+
 }

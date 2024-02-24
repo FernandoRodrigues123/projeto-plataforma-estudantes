@@ -1,4 +1,9 @@
 package com.alunosprojeto.AlunosProjeto.Api.dto;
 
-public record TokenDTO(String tokenJWT) {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public record TokenDTO(
+        String tokenJWT
+) {
 }

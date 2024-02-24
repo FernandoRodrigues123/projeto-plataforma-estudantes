@@ -19,7 +19,6 @@ import java.util.List;
 public class UsuarioEstudante implements UserDetails {
 
 
-
     private String login;
 
     private String senha;
@@ -51,7 +50,7 @@ public class UsuarioEstudante implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return  true;
+        return true;
     }
 
     @Override
@@ -69,4 +68,13 @@ public class UsuarioEstudante implements UserDetails {
         return true;
     }
 
+    public void atualizar(UsuarioEstudanteDTO usuarioEstudanteDTO) {
+        if (usuarioEstudanteDTO.login() != null) {
+            this.login = usuarioEstudanteDTO.login();
+ ;
+        }
+        if (usuarioEstudanteDTO.senha() != null) {
+            this.senha = usuarioEstudanteDTO.senha();
+        }
+    }
 }

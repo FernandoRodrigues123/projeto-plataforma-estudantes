@@ -1,0 +1,11 @@
+.botao {
+    background-color: #3FA5E0;
+    color:white;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.315);
+    border: none;
+    width: calc(100% - 23px);
+    height: 40px;
+    margin: 15px;
+    border-radius: 4px;
+
+}

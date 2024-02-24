@@ -1,0 +1,51 @@
+/* Estilo para o contêiner do Paginacao */
+.paginacao-container {
+    text-align: center;
+}
+
+/* Estilo para a div interna que contém os botões e o texto */
+.paginacao-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Estilo para os botões */
+.paginacao-botao {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #55788B;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-family:monospace;
+    font-size: 20px;
+}
+
+/* Estilo para os botões desativados */
+.paginacao-batao[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+    
+}
+
+/* Estilo para o texto exibindo a página atual */
+.paginacao-text {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+
+/* Ajustes adicionais (exemplo) */
+/* Adicione margens para os botões */
+.paginacao-button {
+    margin: 0 4px;
+}
+
+/* Ajuste o espaçamento entre os botões e o texto */
+.paginacao-text {
+    margin: 0 8px;
+}

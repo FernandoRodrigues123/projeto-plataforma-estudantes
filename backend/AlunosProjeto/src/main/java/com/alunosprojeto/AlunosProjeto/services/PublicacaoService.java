@@ -32,10 +32,13 @@ public class PublicacaoService {
     public Publicacao atualizarPublicacao(Long id, PublicacaoDTOAtualizar dadosNovos) {
         Publicacao publicacao = repository.getReferenceById(id);
         publicacao.atualizar(dadosNovos);
+
         return publicacao;
     }
 
     public void deletarPublicacao(Long id) {
         repository.deleteById(id);
     }
+
+
 }
