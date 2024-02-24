@@ -29,7 +29,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers( HttpMethod.POST , "/estudantes/login","/estudantes/cadastro")
+                    req.requestMatchers( HttpMethod.POST , "/estudantes/login","/estudantes/cadastro", "/teste")
                             .permitAll().requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated();
                 })
