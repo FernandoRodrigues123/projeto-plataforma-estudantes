@@ -1,6 +1,7 @@
 async function BuscaTodasPublicacoesRequest(token,numeroPagina) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
-        const response = await fetch("http://localhost:8080/publicacoes?page="+ numeroPagina, {
+        const response = await fetch(baseURL +"/publicacoes?page="+ numeroPagina, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

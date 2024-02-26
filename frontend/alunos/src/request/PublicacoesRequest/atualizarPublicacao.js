@@ -1,7 +1,8 @@
 async function atualizarPublicacao(login, token, publicacaoID, titulo,corpo,referencia) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
         
-            const response = await fetch("http://localhost:8080/publicacoes/" + login + "/"+publicacaoID, {
+            const response = await fetch(baseURL+ "/publicacoes/" + login + "/"+publicacaoID, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

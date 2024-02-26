@@ -1,6 +1,6 @@
 async function loginRequest(login, senha) {
-
-    const response = await fetch("http://localhost:8080/estudantes/login", {
+    const baseURL = process.env.REACT_APP_BASE_URL;
+    const response = await fetch(baseURL+"/estudantes/login", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

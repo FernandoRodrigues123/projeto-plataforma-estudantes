@@ -1,6 +1,7 @@
 async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo,email, login, senha) {
     try {
-        const response = await fetch("http://localhost:8080/estudantes/cadastro", {
+        const baseURL = process.env.REACT_APP_BASE_URL;
+        const response = await fetch(baseURL+"/estudantes/cadastro", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ import loginRequest from '../../../request/usuarioRequests/loginRequest.js';
 import { Context } from '../../../Context/AuthProvider.js';
 import { useNavigate } from 'react-router-dom';
 
-const FormLogin = () => {
+const FormLogin = () => {  
     const nav = useNavigate();
     const ctx = useContext(Context)
 
@@ -45,9 +45,9 @@ const FormLogin = () => {
     }
 
     return (
-        <section className='sessao-login'>
-
-            <form onSubmit={aoClicarNoBotao} className='form-login'>
+        <section className='sessao-form'>
+          
+            <form onSubmit={aoClicarNoBotao} className='form'>
                 <CampoTexto valor={login} aoAlterado={valor => setLogin(valor)} placeholder='login' label='login'></CampoTexto>
                 <CampoTexto valor={senha} aoAlterado={valor => setSenha(valor)} placeholder='senha' label='senha'></CampoTexto>
 

@@ -1,6 +1,8 @@
 async function alterarEstudante(token, loginAuth, nome, dataDeNascimento, areaDeEstudo, email, login, senha) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
-        const response = await fetch("http://localhost:8080/estudantes/" + loginAuth, {
+
+        const response = await fetch(baseURL+"/estudantes/" + loginAuth, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

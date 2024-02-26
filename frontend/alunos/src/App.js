@@ -31,9 +31,6 @@ function App() {
     <AuthProvider>
       <Nav></Nav>
 
-      <div id="root"></div>
-      <div id="opcoes-portal-root"></div>
-
       <Router>
         <Routes>
           <Route path="/atualizarPublicacao/*" element={<PrivateRoute element={<AtualizarPublicacao />}/>}/>

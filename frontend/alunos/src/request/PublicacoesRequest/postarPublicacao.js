@@ -1,10 +1,11 @@
 async function postarPublicacao(publicacao, login, token) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
         if (token == null || token.trim() === '') {
             alert("tokn vazio ou nullo")
             await new Promise(resolve => setTimeout(resolve, 0));
         } else {
-            const response = await fetch("http://localhost:8080/publicacoes/" + login, {
+            const response = await fetch(baseURL+ "/publicacoes/" + login, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

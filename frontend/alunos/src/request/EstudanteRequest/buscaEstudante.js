@@ -1,6 +1,7 @@
 async function buscaEstudante(token, login) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
-        const response = await fetch("http://localhost:8080/estudantes/" + login, {
+        const response = await fetch(baseURL+"/estudantes/" + login, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 async function deletarEstudante(token, login, senha) {
+    const baseURL = process.env.REACT_APP_BASE_URL;
     try {
-        const response = await fetch("http://localhost:8080/estudantes" , {
+        const response = await fetch(baseURL+"/estudantes" , {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
