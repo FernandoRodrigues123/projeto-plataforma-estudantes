@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useEffect, useState} from 'react';
 import { AuthProvider } from './Context/AuthProvider.js';
 import Home from './componentes/Home/Home.js';
 import Login from './componentes/Autenticacao/FormLogin/FormLogin.js';
@@ -27,12 +27,26 @@ function PublicRoute({ element }) {
 }
 
 function App() {
+
+    
+    const verificarAutenticacao = () => {
+      const autenticado = localStorage.getItem('autenticado');
+      if (autenticado === 'false' || autenticado === null) {
+        console.log(autenticado);
+          window.location.href = '/login';
+        }
+      }
+    
+
+
   return (
     <AuthProvider>
       <Nav></Nav>
 
       <Router>
         <Routes>
+          <Route path="" element={<PublicRoute element={<Login />} />} />
+          <Route path="/" element={<PrivateRoute element={<Home />} />} />
           <Route path="/atualizarPublicacao/*" element={<PrivateRoute element={<AtualizarPublicacao />}/>}/>
           <Route path="/deletarCadastro" element={<PrivateRoute element={<DeletarCadastroForm />} />} />
           <Route path="/atualizarCadastro" element={<PrivateRoute element={<AtualizarCadastroForm />} />} />
@@ -41,8 +55,6 @@ function App() {
           <Route path="/perfil" element={<PrivateRoute element={<Perfil />} />} />
           <Route path="/login" element={<PublicRoute element={<Login />} />} />
           <Route path="/cadastro" element={<PublicRoute element={<Cadastro />} />} />
-          <Route path="/" element={<PrivateRoute element={<Home />} />} />
-          <Route path="" element={<PrivateRoute element={<Home />} />} />
         </Routes>
       </Router>
     </AuthProvider>

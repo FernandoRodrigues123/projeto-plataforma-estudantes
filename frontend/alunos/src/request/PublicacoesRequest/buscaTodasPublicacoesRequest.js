@@ -10,6 +10,9 @@ async function BuscaTodasPublicacoesRequest(token,numeroPagina) {
         });
 
         if (!response.ok) {
+            if(response.status === 403){
+               localStorage.setItem('autenticado', false)
+            }
             throw new Error(`Erro na requisição: ${response.status}`);
         }
         

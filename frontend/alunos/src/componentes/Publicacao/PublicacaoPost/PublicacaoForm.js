@@ -1,7 +1,7 @@
 import CampoTexto from '../../Inputs/CampoTexto/CampoTexto.js';
 import Botao from '../../Inputs/Botao/Botao.js';
 import './publicacaoForm.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import postarPublicacao from '../../../request/PublicacoesRequest/postarPublicacao.js';
 import { useNavigate } from 'react-router-dom';
 import {  publicacaoBase } from '../../../tipos/publicacao.js';
@@ -33,7 +33,7 @@ const PublicacaoForm = () => {
         
         if (token != null && token !== '' && publicacao !== undefined) {
             await postarPublicacao(publicacao,login,token)
-            nav("/")
+            nav("/home")
         } else {
             console.log("Token é nulo. Aguardando 2 segundos...");
             await new Promise(resolve => setTimeout(resolve, 2000)); 
@@ -42,9 +42,6 @@ const PublicacaoForm = () => {
             fetchData(publicacao);
         }   
     }; 
-    useEffect(() => {
-        fetchData();
-    });
 
 
 
@@ -56,7 +53,7 @@ const PublicacaoForm = () => {
                 <CampoTexto valor={referencia} aoAlterado={valor => setReferencia(valor)} placeholder='referencia' label='referencia'></CampoTexto> 
                 <Botao texto='postar' aoClicar={aoClicarNoBotao}></Botao>
             </form>
-            <a href='/'></a>
+           
         </section>
     );
 }

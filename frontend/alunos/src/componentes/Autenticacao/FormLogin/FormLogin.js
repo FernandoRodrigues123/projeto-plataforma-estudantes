@@ -31,14 +31,13 @@ const FormLogin = () => {
 
     const enviar = (login, senha) => {
         loginRequest(login, senha).then(response => {
-            if (response != null) {
-                console.log("token form login: " + response.tokenJWT)
-
+            if (response != null ) {
+              
                 ctx.setToken(response.tokenJWT);
                 ctx.setLogin(login);
                 ctx.setAutenticado(true);
                 ctx.setTempoDeCriacaoDoToken(new Date().getTime());
-                nav('/home')
+                nav("/home")
             }
         });
 

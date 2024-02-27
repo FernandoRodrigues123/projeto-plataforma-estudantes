@@ -8,15 +8,17 @@ import PublicacaoCard from '../Publicacao/PublicacaoCard/PublicacaoCard.js'
 const Home = () => {
     const [numeroPagina, setNumeroPagina] = useState(0);
     const [pagina, setPagina] = useState(publicacaoPagina);
+    const [requisicaoValida, setRequisicaoValida] = useState(true)
     const token = localStorage.getItem('token');
+    
 
     const fetchData = async (numeroPagina) => {
         try {
-            if (token != null) {
-                console.log(token);
+            if (token != null && requisicaoValida) {
                 const data = await BuscaTodasPublicacoesRequest(token, numeroPagina);
                 setPagina(data);
-            } else {
+                setRequisicaoValida(false)
+            } else if (requisicaoValida) {
                 console.log("Token é nulo. Aguardando 2 segundos...");
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 console.log("Continuando a execução após a espera");
@@ -28,8 +30,9 @@ const Home = () => {
     };
 
     useEffect(() => {
-        fetchData(numeroPagina); // Adicione a dependência numeroPagina
-    }, [numeroPagina, token]); // Adicione token como dependência
+        fetchData(numeroPagina);
+        // Adicione a dependência numeroPagina
+    }); // Adicione token como dependência
 
     const handlePageChange = async (novoNumeroDePaginas) => {
         await setNumeroPagina(novoNumeroDePaginas);

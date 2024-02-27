@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
 
   const [autenticado, setAutenticado] = useState(() => {
     const storedAutenticado = localStorage.getItem('autenticado');
-    return storedAutenticado === 'true'; // Convertendo para booleano
+    return storedAutenticado === 'true'; 
   });
 
   const [tempoDeCriacaoDoToken, setTempoDeCriacaoDoToken] = useState(() => {
@@ -24,7 +24,6 @@ const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    // Função para verificar se o token expirou após uma hora
     const tokenExpirou = () => {
       if (tempoDeCriacaoDoToken) {
         const horaAtual = new Date().getTime();
@@ -36,19 +35,16 @@ const AuthProvider = ({ children }) => {
       return false;
     };
 
-    // Verifica se o token expirou e atualiza os estados
     if (tokenExpirou()) {
       setToken('');
       setLogin('');
       setAutenticado(false);
       setTempoDeCriacaoDoToken(null);
-    }
-
-    // Atualiza o localStorage sempre que o token é alterado
+    }else{
     localStorage.setItem('token', token);
     localStorage.setItem('login', login);
     localStorage.setItem('autenticado', autenticado);
-    localStorage.setItem('tempoDeCriacaoDoToken', tempoDeCriacaoDoToken);
+    localStorage.setItem('tempoDeCriacaoDoToken', tempoDeCriacaoDoToken);}
   }, [token, login, autenticado, tempoDeCriacaoDoToken]);
 
   return (
