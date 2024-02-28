@@ -5,14 +5,13 @@ import { Estudante } from "../../../tipos/estudante";
 import DeletarPublicacao from "../../Publicacao/DeletarPublicacao/DeletarPublicacao";
 import { publicacaoPagina } from "../../../tipos/publicacao";
 import PublicacaoCardSemEstudante from "../../Publicacao/PublicacaoCardSemEstudante/PublicacaoCardSemEstudante"
-import Paginacao from "../../Publicacao/Paginacao/Paginacao";
 const Perfil = () => {
   const token = localStorage.getItem('token');
   const login = localStorage.getItem('login');
   const [estudante, setEstudante] = useState(Estudante);
   const [publicacoesPage, setPublicacoesPage] = useState(publicacaoPagina)
   const [requisicaoValida, setRequisicaoValida] = useState(true)
-  const [numeroPagina, setNumeroPagina] = useState(0);
+  
   let id = 0
   console.log(publicacoesPage.content);
 
@@ -37,9 +36,7 @@ const Perfil = () => {
   useEffect(() => {
     fetchData()
   });
-  const handlePageChange = async (novoNumeroDePaginas) => {
-    await setNumeroPagina(novoNumeroDePaginas);
-  };
+
 
 
   const deletar = () => {
@@ -55,7 +52,7 @@ const Perfil = () => {
           <h2><a href="/deletarCadastro">deletar cadastro</a></h2>
         </div>
       </header>
-      <Paginacao page={publicacoesPage} onChange={handlePageChange} value={numeroPagina} />
+     
       {publicacoesPage.content.map(pub => (
         <div id='publicacao-card-perfil' className='publicacao-card' key={pub.id} >
           <div id='publicacao'> 
@@ -68,8 +65,7 @@ const Perfil = () => {
           </footer>
         </div>
       ))}
-      <Paginacao page={publicacoesPage} onChange={handlePageChange} value={numeroPagina} />
-
+     
     </div>
   );
 };

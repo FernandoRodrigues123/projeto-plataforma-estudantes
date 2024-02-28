@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react';
+import {React} from 'react';
 import { AuthProvider } from './Context/AuthProvider.js';
 import Home from './componentes/Home/Home.js';
 import Login from './componentes/Autenticacao/FormLogin/FormLogin.js';
@@ -11,8 +11,8 @@ import AtualizarCadastroForm from './componentes/Usuario/AtualizarCadastroForm/A
 import DeletarCadastroForm from './componentes/Usuario/DeletarCadastroForm/DeletarCadastroForm.js';
 import AtualizarPublicacao from './componentes/Publicacao/AtualizarPublicacao/AtualizarPublicacao.js';
 
-function PrivateRoute({ element }) {
-  const autenticado = localStorage.getItem('autenticado');
+ function PrivateRoute({ element }) {
+  const autenticado =  localStorage.getItem('autenticado');
   console.log("em app autenticado " + autenticado);
 
   if (autenticado === 'false') {
@@ -29,15 +29,7 @@ function PublicRoute({ element }) {
 function App() {
 
     
-    const verificarAutenticacao = () => {
-      const autenticado = localStorage.getItem('autenticado');
-      if (autenticado === 'false' || autenticado === null) {
-        console.log(autenticado);
-          window.location.href = '/login';
-        }
-      }
-    
-
+   
 
   return (
     <AuthProvider>

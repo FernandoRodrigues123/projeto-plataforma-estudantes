@@ -10,9 +10,9 @@ const Home = () => {
     const [pagina, setPagina] = useState(publicacaoPagina);
     const [requisicaoValida, setRequisicaoValida] = useState(true)
     const token = localStorage.getItem('token');
-    
 
-    const fetchData = async (numeroPagina) => {
+
+    const fetchData = async () => {
         try {
             if (token != null && requisicaoValida) {
                 const data = await BuscaTodasPublicacoesRequest(token, numeroPagina);
@@ -22,7 +22,7 @@ const Home = () => {
                 console.log("Token é nulo. Aguardando 2 segundos...");
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 console.log("Continuando a execução após a espera");
-                await fetchData(numeroPagina); // Chame a função novamente após a espera
+                await fetchData();
             }
         } catch (error) {
             console.error("Erro ao buscar dados:", error);
@@ -30,13 +30,16 @@ const Home = () => {
     };
 
     useEffect(() => {
-        fetchData(numeroPagina);
-        // Adicione a dependência numeroPagina
-    }); // Adicione token como dependência
+        fetchData();
+    });
 
-    const handlePageChange = async (novoNumeroDePaginas) => {
-        await setNumeroPagina(novoNumeroDePaginas);
+    const handlePageChange = async (novoNumeroDePagina) => {
+        await setNumeroPagina(novoNumeroDePagina);
+        setRequisicaoValida(true)
+        console.log("Novo número de página:", numeroPagina);
+        
     };
+    
 
     return (
         <div className='contem-pagina'>

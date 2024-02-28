@@ -29,7 +29,7 @@ const FormLogin = () => {
         nav("/cadastro")
     }
 
-    const enviar = (login, senha) => {
+    const enviar = async (login, senha) => {
         loginRequest(login, senha).then(response => {
             if (response != null ) {
               
@@ -37,6 +37,7 @@ const FormLogin = () => {
                 ctx.setLogin(login);
                 ctx.setAutenticado(true);
                 ctx.setTempoDeCriacaoDoToken(new Date().getTime());
+                 new Promise(resolve => setTimeout(resolve, 2000));
                 nav("/home")
             }
         });

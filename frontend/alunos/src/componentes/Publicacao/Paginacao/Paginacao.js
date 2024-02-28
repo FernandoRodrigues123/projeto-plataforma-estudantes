@@ -2,6 +2,16 @@
 import './paginacao.css';
 
 const Paginacao = (props) => {
+
+    const menos = () =>{
+      
+        props.onChange(props.value - 1);
+    }
+    const mais = () =>{
+   
+        props.onChange(props.value + 1);
+    }
+
     return (
         <div className="paginacao-container">
             <div className="paginacao-inner">
@@ -9,12 +19,7 @@ const Paginacao = (props) => {
                     className="paginacao-botao"
                     id='menos'
                     disabled={props.page.first}
-                    onClick={() => {
-                        if (!props.page.first) {
-                            props.onChange(props.page.number - 1);
-                           
-                        }
-                    }}
+                    onClick={menos}
                 >
               <img src={require('../../../imagens/setas/seta-esquerda.png')} alt='seta direita'></img>
                 </button>
@@ -23,12 +28,7 @@ const Paginacao = (props) => {
                     className="paginacao-botao"
                     id='mais'
                     disabled={props.page.last}
-                    onClick={() => {
-                        if (!props.page.last) {
-                            props.onChange(props.page.number + 1);
-                
-                        }
-                    }}
+                    onClick={mais}
                 >
                     <img src={require('../../../imagens/setas/seta-direito.png')} alt='seta direita'></img>
                 </button>
