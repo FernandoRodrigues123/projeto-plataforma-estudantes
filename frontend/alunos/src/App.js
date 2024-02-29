@@ -42,7 +42,7 @@ function App() {
           <Route path="/atualizarPublicacao/*" element={<PrivateRoute element={<AtualizarPublicacao />}/>}/>
           <Route path="/deletarCadastro" element={<PrivateRoute element={<DeletarCadastroForm />} />} />
           <Route path="/atualizarCadastro" element={<PrivateRoute element={<AtualizarCadastroForm />} />} />
-          <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+          <Route path="/home" element={<PrivateRoute element= {<Home />} />} />
           <Route path="/postar" element={<PrivateRoute element={<PublicacaoForm />} />} />
           <Route path="/perfil" element={<PrivateRoute element={<Perfil />} />} />
           <Route path="/login" element={<PublicRoute element={<Login />} />} />
