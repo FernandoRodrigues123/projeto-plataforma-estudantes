@@ -26,7 +26,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http.csrf(csrf -> csrf.disable())
+        return http.csrf(csrf -> csrf.disable()).cors(c ->c.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers( HttpMethod.POST,"/estudantes/login","/estudantes/cadastro")
@@ -48,14 +48,14 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        System.out.println("chamando cors config");
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
-                .allowedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        System.out.println("chamando cors config");
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
+//                .allowedHeaders("*")
+//                .allowCredentials(true)
+//                .maxAge(3600);
+//    }
 }
