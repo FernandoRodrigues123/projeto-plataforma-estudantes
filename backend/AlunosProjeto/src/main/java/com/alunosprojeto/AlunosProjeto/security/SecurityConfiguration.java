@@ -51,7 +51,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000/")
+                .allowedOrigins("https://unialunos.netlify.app", "https://main--unialunos.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
                 .allowedHeaders("*")
                 .allowCredentials(true)
