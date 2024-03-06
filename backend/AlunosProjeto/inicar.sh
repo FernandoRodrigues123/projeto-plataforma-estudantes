@@ -1,1 +1,0 @@
-java -jar projeto-plataforma-estudantes/backend/AlunosProjeto/target/AlunosProjeto-0.0.1-SNAPSHOT.jar
