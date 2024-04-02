@@ -27,6 +27,16 @@ function PublicRoute({ element }) {
 }
 
 function App() {
+// Obtém a data e hora atual
+var agora = new Date();
+var horaAtual = agora.getHours();
+
+// Verifica se está entre 7 e 12 horas
+if (horaAtual >= 7 && horaAtual <= 12) {
+    console.log("Horário de disponibilidade.");
+} else {
+    alert("Horário de disponibilidade apenas das 7h às 12h.");
+}
 
     
    
@@ -34,7 +44,7 @@ function App() {
   return (
     <AuthProvider>
       <Nav></Nav>
-
+   
       <Router>
         <Routes>
           <Route path="" element={<PublicRoute element={<Login />} />} />
