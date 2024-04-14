@@ -13,7 +13,9 @@ const Nav = () => {
                 </div>
                 <div className="contem-direita">
                     <div className='direita'>
+                        <a href='/buscar' id='lupa-ancora'><img id='lupa-img' className='img-opcoes' src={require('../../imagens/lupa/lupa.png')} alt='pesquisa' /></a>
                         <h2><a href="/perfil">perfil</a></h2>
+
                     </div>
                 </div>
             </div>

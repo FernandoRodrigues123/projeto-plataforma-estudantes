@@ -7,7 +7,6 @@ import com.alunosprojeto.AlunosProjeto.domain.models.UsuarioEstudante;
 import com.alunosprojeto.AlunosProjeto.security.TokenServices;
 import com.alunosprojeto.AlunosProjeto.services.EstudanteServices;
 import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,21 +63,28 @@ public class EstudanteController {
     }
 
     @GetMapping("/{login}")
-    public ResponseEntity<EstudanteDTOLeitura> buscaEstudantePorLogin(@PathVariable String login){
+    public ResponseEntity<EstudanteDTOLeitura> buscaEstudantePorLogin(@PathVariable String login) {
 
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
-            return ResponseEntity.ok(new EstudanteDTOLeitura(services.buscarEstudantePorLogin( login)));
+            return ResponseEntity.ok(new EstudanteDTOLeitura(services.buscarEstudantePorLogin(login)));
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
+
     @GetMapping("/s/{nome}")
-    public ResponseEntity<Page<EstudanteDTOLeitura>> buscaPorNome(@PageableDefault(size = 10) Pageable paginacao, @PathVariable String nome) {
+    public ResponseEntity<Page<EstudanteDTOLeituraSemPublicacaoEUsuario>> buscaTodosPorNome(@PageableDefault(size = 10) Pageable paginacao, @PathVariable String nome) {
 
         Page<Estudante> estudantes = services.buscarEstudantePorNome(paginacao, nome);
-        Page<EstudanteDTOLeitura> estudantesDTOLeitura = estudantes.map(EstudanteDTOLeitura::new);
-        return ResponseEntity.ok(estudantesDTOLeitura);
+        Page<EstudanteDTOLeituraSemPublicacaoEUsuario> dto = estudantes.map(EstudanteDTOLeituraSemPublicacaoEUsuario::new);
+        return ResponseEntity.ok(dto);
 
+    }
+
+    @GetMapping("/perfil/{id}")
+    public ResponseEntity<EstudanteDTOLeitura> buscaPorId(@PathVariable Long id) {
+        Estudante estudante = services.buscaPorId(id);
+        return ResponseEntity.ok(new EstudanteDTOLeitura(estudante));
     }
 
     @PutMapping("/{login}")

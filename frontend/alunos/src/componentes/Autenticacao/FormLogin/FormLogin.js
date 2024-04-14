@@ -37,7 +37,7 @@ const FormLogin = () => {
                 ctx.setLogin(login);
                 ctx.setAutenticado(true);
                 ctx.setTempoDeCriacaoDoToken(new Date().getTime());
-                 new Promise(resolve => setTimeout(resolve, 2000));
+                new Promise(resolve => setTimeout(resolve, 2000));
                 nav("/home")
             }
         });

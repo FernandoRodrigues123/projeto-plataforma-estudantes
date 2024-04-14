@@ -34,3 +34,13 @@ a{
 .img-opcoes{   
  margin: 50% 20px 0px 10px;
 }
+#lupa-img{
+    height: 40px;
+    width: 40px;
+    display: flex;
+   margin:auto 10px auto 0;
+}
+#lupa-ancora{
+    display:flex;
+    justify-content: center;
+}

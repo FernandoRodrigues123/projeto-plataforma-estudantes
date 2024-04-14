@@ -1,0 +1,18 @@
+.estudante-card-sem-publicacao{
+    background-color: #3FA5E0;
+    color: white;
+    width: 75%;
+    margin:auto;
+    border-radius: 10px;
+    padding: 2px 4px 3px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    
+}
+#estudante-nome{
+    margin:auto 10px;
+}
+#estudante-idade{
+    margin:auto 10px;
+}
