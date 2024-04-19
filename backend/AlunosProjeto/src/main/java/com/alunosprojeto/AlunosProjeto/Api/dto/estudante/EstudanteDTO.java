@@ -12,6 +12,9 @@ public record EstudanteDTO(
 
         @NotBlank
         String nome,
+
+        String urlImagem,
+
         @NotNull(message = "data de nascimento")
         LocalDate dataDeNascimento,
         @NotBlank
@@ -27,7 +30,7 @@ public record EstudanteDTO(
 
 ) {
         public EstudanteDTO(Estudante estudante) {
-                this( estudante.getNome(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),estudante.getEmail(), new UsuarioEstudanteDTO(estudante.getUsuarioEstudante()));
+                this( estudante.getNome(), estudante.getUrlImagem(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),estudante.getEmail(), new UsuarioEstudanteDTO(estudante.getUsuarioEstudante()));
         }
 
 

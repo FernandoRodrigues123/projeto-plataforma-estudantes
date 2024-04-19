@@ -13,6 +13,7 @@ public record EstudanteDTODetalhes(
         Long id,
         String nome,
 
+        String urlImagem,
         String email,
 
         LocalDate dataDeNascimento,
@@ -23,7 +24,7 @@ public record EstudanteDTODetalhes(
 
 ) {
     public EstudanteDTODetalhes(Estudante estudante){
-        this(estudante.getId(),estudante.getNome(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),new UsuarioEstudanteDTO(estudante.getUsuarioEstudante()));
+        this(estudante.getId(),estudante.getUrlImagem(), estudante.getNome(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),new UsuarioEstudanteDTO(estudante.getUsuarioEstudante()));
     }
 
 

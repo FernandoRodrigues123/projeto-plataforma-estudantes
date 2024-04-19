@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public record EstudanteDTOLeituraSemPublicacaoEUsuario(
         Long id,
         String nome,
+        String urlImagem,
 
         String email,
 
@@ -14,6 +15,6 @@ public record EstudanteDTOLeituraSemPublicacaoEUsuario(
         String areaDeEstudo
 ) {
     public EstudanteDTOLeituraSemPublicacaoEUsuario(Estudante estudante){
-        this(estudante.getId(), estudante.getNome(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo());
+        this(estudante.getId(), estudante.getNome(),estudante.getUrlImagem(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo());
     }
 }
