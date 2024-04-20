@@ -1,7 +1,7 @@
 
 import './campoTexto.css'
 
-const CampoTexto = (props) => {
+const CampoTexto = (props) => {     
     const placeholder = `${props.placeholder}`
 
 

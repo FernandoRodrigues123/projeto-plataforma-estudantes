@@ -37,7 +37,7 @@ const FormLogin = () => {
                 ctx.setLogin(login);
                 ctx.setAutenticado(true);
                 ctx.setTempoDeCriacaoDoToken(new Date().getTime());
-                 new Promise(resolve => setTimeout(resolve, 2000));
+                new Promise(resolve => setTimeout(resolve, 2000));
                 nav("/home")
             }
         });
@@ -49,7 +49,7 @@ const FormLogin = () => {
           
             <form onSubmit={aoClicarNoBotao} className='form'>
                 <CampoTexto valor={login} aoAlterado={valor => setLogin(valor)} placeholder='login' label='login'></CampoTexto>
-                <CampoTexto valor={senha} aoAlterado={valor => setSenha(valor)} placeholder='senha' label='senha'></CampoTexto>
+                <CampoTexto tipo="password" valor={senha} aoAlterado={valor => setSenha(valor)} placeholder='senha' label='senha'></CampoTexto>
 
                 <div className='contem-botoes'>
                     <button type="submit" className="botao" id="botao-login" onClick={aoClicarNoBotao}>Login</button>

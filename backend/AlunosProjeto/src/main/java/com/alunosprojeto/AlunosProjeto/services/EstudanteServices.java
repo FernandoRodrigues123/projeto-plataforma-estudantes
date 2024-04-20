@@ -96,4 +96,8 @@ public class EstudanteServices {
         return es;
     }
 
+    public Estudante buscaPorId(Long id){
+        return estudanteRepository.getReferenceById(id);
+    }
+
 }

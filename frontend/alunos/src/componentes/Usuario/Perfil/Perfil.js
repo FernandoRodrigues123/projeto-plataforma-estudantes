@@ -5,6 +5,7 @@ import { Estudante } from "../../../tipos/estudante";
 import DeletarPublicacao from "../../Publicacao/DeletarPublicacao/DeletarPublicacao";
 import { publicacaoPagina } from "../../../tipos/publicacao";
 import PublicacaoCardSemEstudante from "../../Publicacao/PublicacaoCardSemEstudante/PublicacaoCardSemEstudante"
+import EstudanteCardSemPublicacao from "../EstudanteCardSemPublicacao/EstudanteCardSemPublicacao";
 const Perfil = () => {
   const token = localStorage.getItem('token');
   const login = localStorage.getItem('login');
@@ -14,6 +15,11 @@ const Perfil = () => {
   
   let id = 0
   console.log(publicacoesPage.content);
+
+  var partesData = String(estudante.dataDeNascimento).split('-'); 
+  var anoDeNascimento = parseInt(partesData[0]);
+  
+  var idade = new Date().getFullYear() - anoDeNascimento 
 
   const fetchData = async () => {
     if ((token != null && token !== "") && (login != null && login !== "") && requisicaoValida) {
@@ -46,7 +52,9 @@ const Perfil = () => {
   return (
     <div className='estudante'>
       <header id='cabecario-estudante'>
-        <h1 id='nome'>{estudante.nome}</h1>
+        <h1 className="campo">{estudante.nome}</h1>
+        <p className="campo">idade {idade}</p>
+        <p className="campo">{estudante.areaDeEstudo}</p>
         <div id='acoes'>
           <h2 id='atualizar'><a href='/atualizarCadastro'>atualizar dados de cadastro</a></h2>
           <h2><a href="/deletarCadastro">deletar cadastro</a></h2>

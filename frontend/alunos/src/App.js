@@ -10,6 +10,8 @@ import PublicacaoForm from './componentes/Publicacao/PublicacaoPost/PublicacaoFo
 import AtualizarCadastroForm from './componentes/Usuario/AtualizarCadastroForm/AtualizarCadastroForm.js';
 import DeletarCadastroForm from './componentes/Usuario/DeletarCadastroForm/DeletarCadastroForm.js';
 import AtualizarPublicacao from './componentes/Publicacao/AtualizarPublicacao/AtualizarPublicacao.js';
+import Busca from './componentes/Usuario/Busca/Busca.js';
+import PerfilPublico from './componentes/Usuario/PerfilPublico/PerfilPublico.js';
 
  function PrivateRoute({ element }) {
   const autenticado =  localStorage.getItem('autenticado');
@@ -38,6 +40,16 @@ if (horaAtual >= 7 && horaAtual <= 12) {
     alert("Horário de disponibilidade apenas das 7h às 12h.");
 }
 
+var agora = new Date();
+var horaAtual = agora.getHours();
+
+
+//if (horaAtual >= 7 && horaAtual <= 12) {
+  //  console.log("Horário de disponibilidade.");
+//} else {
+  //  alert("Horário de disponibilidade apenas das 7h às 12h.");
+//}
+
     
    
 
@@ -55,6 +67,8 @@ if (horaAtual >= 7 && horaAtual <= 12) {
           <Route path="/home" element={<PrivateRoute element= {<Home />} />} />
           <Route path="/postar" element={<PrivateRoute element={<PublicacaoForm />} />} />
           <Route path="/perfil" element={<PrivateRoute element={<Perfil />} />} />
+          <Route path="/perfilPublico/*" element={<PrivateRoute element={<PerfilPublico />} />} />
+          <Route path="/buscar" element={<PrivateRoute element={<Busca />} />} />
           <Route path="/login" element={<PublicRoute element={<Login />} />} />
           <Route path="/cadastro" element={<PublicRoute element={<Cadastro />} />} />
         </Routes>
