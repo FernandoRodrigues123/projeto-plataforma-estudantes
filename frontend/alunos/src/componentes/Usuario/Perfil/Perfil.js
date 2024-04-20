@@ -5,7 +5,6 @@ import { Estudante } from "../../../tipos/estudante";
 import DeletarPublicacao from "../../Publicacao/DeletarPublicacao/DeletarPublicacao";
 import { publicacaoPagina } from "../../../tipos/publicacao";
 import PublicacaoCardSemEstudante from "../../Publicacao/PublicacaoCardSemEstudante/PublicacaoCardSemEstudante"
-import EstudanteCardSemPublicacao from "../EstudanteCardSemPublicacao/EstudanteCardSemPublicacao";
 const Perfil = () => {
   const token = localStorage.getItem('token');
   const login = localStorage.getItem('login');

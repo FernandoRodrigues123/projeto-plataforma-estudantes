@@ -40,17 +40,7 @@ if (horaAtual >= 7 && horaAtual <= 12) {
     alert("Horário de disponibilidade apenas das 7h às 12h.");
 }
 
-var agora = new Date();
-var horaAtual = agora.getHours();
 
-
-if (horaAtual >= 7 && horaAtual <= 12) {
-    console.log("Horário de disponibilidade.");
-} else {
-    alert("Horário de disponibilidade apenas das 7h às 12h.");
-}
-
-    
    
 
   return (
