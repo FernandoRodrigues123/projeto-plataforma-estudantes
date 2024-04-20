@@ -1,3 +1,4 @@
-inicio de um projeto
+primeira versao do projeto finalizada
 
-deve-se adcionar quaisquer mudancas em subdiretorio dentro do diretorio raiz 
+funcionamento apenas das 7:00 da manha ate as 12:00 horas
+https://unialunos.netlify.app 
