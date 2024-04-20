@@ -11,6 +11,7 @@ import AtualizarCadastroForm from './componentes/Usuario/AtualizarCadastroForm/A
 import DeletarCadastroForm from './componentes/Usuario/DeletarCadastroForm/DeletarCadastroForm.js';
 import AtualizarPublicacao from './componentes/Publicacao/AtualizarPublicacao/AtualizarPublicacao.js';
 import Busca from './componentes/Usuario/Busca/Busca.js';
+import PerfilPublico from './componentes/Usuario/PerfilPublico/PerfilPublico.js';
 
  function PrivateRoute({ element }) {
   const autenticado =  localStorage.getItem('autenticado');
@@ -56,6 +57,7 @@ var horaAtual = agora.getHours();
           <Route path="/home" element={<PrivateRoute element= {<Home />} />} />
           <Route path="/postar" element={<PrivateRoute element={<PublicacaoForm />} />} />
           <Route path="/perfil" element={<PrivateRoute element={<Perfil />} />} />
+          <Route path="/perfilPublico/*" element={<PrivateRoute element={<PerfilPublico />} />} />
           <Route path="/buscar" element={<PrivateRoute element={<Busca />} />} />
           <Route path="/login" element={<PublicRoute element={<Login />} />} />
           <Route path="/cadastro" element={<PublicRoute element={<Cadastro />} />} />
