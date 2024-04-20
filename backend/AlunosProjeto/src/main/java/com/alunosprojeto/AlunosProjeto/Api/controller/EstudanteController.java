@@ -83,8 +83,12 @@ public class EstudanteController {
 
     @GetMapping("/perfil/{id}")
     public ResponseEntity<EstudanteDTOLeitura> buscaPorId(@PathVariable Long id) {
+
         Estudante estudante = services.buscaPorId(id);
+
         return ResponseEntity.ok(new EstudanteDTOLeitura(estudante));
+
+
     }
 
     @PutMapping("/{login}")
