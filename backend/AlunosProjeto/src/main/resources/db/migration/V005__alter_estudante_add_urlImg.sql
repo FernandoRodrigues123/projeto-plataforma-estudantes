@@ -1,0 +1,1 @@
+ALTER TABLE estudantes ADD column URL_IMAGEM varchar(255);

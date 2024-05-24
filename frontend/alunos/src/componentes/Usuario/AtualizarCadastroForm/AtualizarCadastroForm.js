@@ -40,7 +40,7 @@ const AtualizarCadastroForm = () => {
     <section className='sessao-atualizar'>
       <form className='form-atualizar' onSubmit={aoClicarNoBotao}>
         <CampoTexto tipo='text' valor={nome} aoAlterado={valor => setNome(valor)} placeholder='nome' label='nome'></CampoTexto>
-        <CampoTexto tipo='text' valor={dataDeNascimento} aoAlterado={valor => setDataDeNascimento(valor)} placeholder='data de nascimento' label='data de nascimento'></CampoTexto>
+        <CampoTexto tipo='date' valor={dataDeNascimento} aoAlterado={valor => setDataDeNascimento(valor)} placeholder='data de nascimento' label='data de nascimento'></CampoTexto>
         <CampoTexto tipo='text' valor={areaDeEstudo} aoAlterado={valor => setAreaDeEstudo(valor)} placeholder='area de estudo' label='area de  estudo'></CampoTexto>
         <CampoTexto tipo='text' valor={email} aoAlterado={valor => setEmail(valor)} placeholder='email' label='email'></CampoTexto>
         <Botao className="botao" texto='Cadastrar' aoClicar={aoClicarNoBotao}></Botao>

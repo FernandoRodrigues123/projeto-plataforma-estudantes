@@ -19,7 +19,7 @@ const Perfil = () => {
     if ((token != null && token !== "") && (login != null && login !== "") && requisicaoValida) {
       try {
         const data = await buscaEstudante(token, login);
-        setEstudante(data);
+          setEstudante(data);
         setPublicacoesPage(data.publicacoes)
         setRequisicaoValida(false)
       } catch (error) {
