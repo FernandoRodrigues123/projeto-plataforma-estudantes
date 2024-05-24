@@ -1,4 +1,4 @@
-async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo, email, login, senha) {
+async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo, email, login, senha, urlImagem) {
 
     const baseURL = process.env.REACT_APP_BASE_URL;
     const response = await fetch(baseURL + "/estudantes/cadastro", {
@@ -12,6 +12,7 @@ async function cadastroRequest(nome, dataDeNascimento, areaDeEstudo, email, logi
             dataDeNascimento: dataDeNascimento,
             areaDeEstudo: areaDeEstudo,
             email: email,
+            urlImagem: urlImagem,       
             usuario: {
                 login: login,
                 senha: senha,
