@@ -25,7 +25,7 @@ const Cadastro = () => {
                 // Realiza o upload do arquivo
                 const data = await uploadFile({ target: { files: [imagem] } });
                 // Obtém a URL  do arquivo enviado
-                console.log(" cadastro data"+data);
+                console.log(data);
                 const urlImagem = data.Location;
                 console.log(urlImagem);
                 // Chama a função de salvar com a URL da imagem

@@ -19,7 +19,7 @@ const Perfil = () => {
     if ((token != null && token !== "") && (login != null && login !== "") && requisicaoValida) {
       try {
         const data = await buscaEstudante(token, login);
-          setEstudante(data);
+        setEstudante(data);
         setPublicacoesPage(data.publicacoes)
         setRequisicaoValida(false)
       } catch (error) {
@@ -46,6 +46,7 @@ const Perfil = () => {
   return (
     <div className='estudante'>
       <header id='cabecario-estudante'>
+       <img id='foto-perfil' src={`${estudante.urlImagem}`}></img>
         <h1 id='nome'>{estudante.nome}</h1>
         <div id='acoes'>
           <h2 id='atualizar'><a href='/atualizarCadastro'>atualizar dados de cadastro</a></h2>
