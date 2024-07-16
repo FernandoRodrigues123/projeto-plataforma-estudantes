@@ -24,6 +24,8 @@ public class Estudante {
 
     private String nome;
 
+    private String urlImagem;
+
     private String email;
 
     @Column(name = "data_de_nascimento")
@@ -41,6 +43,7 @@ public class Estudante {
 
     public Estudante(EstudanteDTO estudanteDTO) {
         this.nome = estudanteDTO.nome();
+        this.urlImagem  = estudanteDTO.urlImagem();
         this.dataDeNascimento = estudanteDTO.dataDeNascimento();
         this.areaDeEstudo = estudanteDTO.areaDeEstudo();
         this.email = estudanteDTO.email();

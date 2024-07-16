@@ -51,6 +51,8 @@ const Perfil = () => {
   return (
     <div className='estudante'>
       <header id='cabecario-estudante'>
+
+       <img id='foto-perfil' src={`${estudante.urlImagem}`}></img>
         <h1 className="campo">{estudante.nome}</h1>
         <p className="campo">idade {idade}</p>
         <p className="campo">{estudante.areaDeEstudo}</p>

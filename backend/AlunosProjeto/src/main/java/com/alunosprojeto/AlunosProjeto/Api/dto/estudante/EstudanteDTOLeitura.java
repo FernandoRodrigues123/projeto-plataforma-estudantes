@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public record EstudanteDTOLeitura(
         Long id,
         String nome,
+        String urlImagem,
 
         String email,
 
@@ -21,6 +22,6 @@ public record EstudanteDTOLeitura(
 
 ) {
     public EstudanteDTOLeitura(Estudante estudante){
-        this(estudante.getId(), estudante.getNome(),estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),new PageImpl<>(estudante.getPublicacoes().stream().map(PublicacaoDTOLeituraSemEstudante::new).collect(Collectors.toList())));
+        this(estudante.getId(), estudante.getNome(), estudante.getUrlImagem(), estudante.getEmail(), estudante.getDataDeNascimento(), estudante.getAreaDeEstudo(),new PageImpl<>(estudante.getPublicacoes().stream().map(PublicacaoDTOLeituraSemEstudante::new).collect(Collectors.toList())));
     }
 }
