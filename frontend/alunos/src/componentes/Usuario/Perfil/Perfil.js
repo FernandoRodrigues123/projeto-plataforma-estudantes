@@ -57,8 +57,8 @@ const Perfil = () => {
         <p className="campo">idade {idade}</p>
         <p className="campo">{estudante.areaDeEstudo}</p>
         <div id='acoes'>
-          <h2 id='atualizar'><a href='/atualizarCadastro'>atualizar dados de cadastro</a></h2>
-          <h2><a href="/deletarCadastro">deletar cadastro</a></h2>
+          <h2 id='atualizar' className="put-del"><a href='/atualizarCadastro'>editar</a></h2>
+          <h2 id="deletar" className="put-del"><a href="/deletarCadastro">deletar</a></h2>
         </div>
       </header>
      
@@ -69,7 +69,7 @@ const Perfil = () => {
           </div>
           <p style={{ display: 'none' }} className='gambiarra-das-brava'>{id = pub.id}</p>
           <footer id='rodape-publicacao-perfil-privado'>
-            <button id='atualizar-publicacao'><a href={`/atualizarPublicacao/${estudante.email}/${pub.id}`} >atualizar</a></button>
+            <button className="put-del"><a href={`/atualizarPublicacao/${estudante.email}/${pub.id}`} >editar</a></button>
             <button id='deletar-publicacao' onClick={deletar}>deletar</button>
           </footer>
         </div>

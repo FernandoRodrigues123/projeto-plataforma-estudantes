@@ -1,4 +1,4 @@
-async function alterarEstudante(token, loginAuth, nome, dataDeNascimento, areaDeEstudo, email, login, senha) {
+async function alterarEstudante(token, loginAuth, nome, urlImagem,dataDeNascimento, areaDeEstudo, email, login, senha) {
     const baseURL = process.env.REACT_APP_BASE_URL;
     try {
 
@@ -10,6 +10,7 @@ async function alterarEstudante(token, loginAuth, nome, dataDeNascimento, areaDe
             },
             body: JSON.stringify({
                 nome: nome,
+                urlImagem: urlImagem,
                 dataDeNascimento: dataDeNascimento,
                 areaDeEstudo: areaDeEstudo,
                 email: email,
