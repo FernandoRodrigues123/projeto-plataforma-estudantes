@@ -5,8 +5,9 @@ const PublicacaoCard = (props) => {
     const pub = props.publicacao;
     return (
         <div className='card'>
-            <header>
-                <p>{pub.estudante.nome}</p>
+            <header id="cabecario-publicacao">
+                <div id='conteudo'><img id='foto-perfil' src={`${pub.estudante.urlImagem}`} alt='foto do estudante'></img>
+                <p id='nome'>{pub.estudante.nome}</p></div>
             </header>
             <div className='corpo'>
                 <div className='titulo'>

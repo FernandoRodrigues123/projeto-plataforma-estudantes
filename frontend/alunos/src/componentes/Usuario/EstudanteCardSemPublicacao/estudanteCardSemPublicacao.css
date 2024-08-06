@@ -13,6 +13,11 @@
 #estudante-nome{
     margin:auto 10px;
 }
-#estudante-idade{
-    margin:auto 10px;
+#estudante-area-de-estudos{
+    margin: auto 0px;
+    width: 200px;
+   
+}
+#foto-perfil{
+    width: 90px;
 }

@@ -1,22 +1,33 @@
 /* Estilo para o contêiner do card */
 .card {
-    border: 1px solid #55788B;
-    border-radius: 8px;
-    padding: 16px;
+    border: 2px solid #55788B;
+    border-radius: 10px; 
     margin: 16px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1);
     width: 60%;
 }
 
 /* Estilo para o cabeçalho dentro do card */
 .card header {
+    border-radius: 10px 10px 0px 0px;
     font-size: 18px;
     font-weight: bold;
-    color: #61604C;
+    color: #ffffff;
     margin-bottom: 12px;
-}
+    background-color: #007bff;
+   
 
+}
+.card header #conteudo{
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+#nome{
+    margin: auto 0px;
+}
 /* Estilo para o título dentro do card */
 .card .corpo .titulo h1 {
     font-size: 24px;
@@ -26,6 +37,7 @@
 
 /* Estilo para o corpo dentro do card */
 .card .corpo {
+    margin: 10px;
     font-size: 16px;
     color: #555;
 }
@@ -40,3 +52,4 @@
     font-style: italic;
     color: #888;
 }
+
