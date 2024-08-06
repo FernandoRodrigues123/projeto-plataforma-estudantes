@@ -58,6 +58,9 @@ public class Estudante {
         if (estudanteDTO.areaDeEstudo() != null && estudanteDTO.areaDeEstudo().isBlank() != true)
             this.areaDeEstudo = estudanteDTO.areaDeEstudo();
         if (estudanteDTO.email() != null && estudanteDTO.email().isBlank() != true) this.email = estudanteDTO.email();
+        if(estudanteDTO.urlImagem() !=null && estudanteDTO.urlImagem().isBlank() != true){
+            this.urlImagem = estudanteDTO.urlImagem();
+        }
     }
 
 
