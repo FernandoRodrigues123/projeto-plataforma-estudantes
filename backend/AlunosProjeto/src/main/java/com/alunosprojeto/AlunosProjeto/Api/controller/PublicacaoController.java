@@ -2,7 +2,9 @@ package com.alunosprojeto.AlunosProjeto.Api.controller;
 
 import com.alunosprojeto.AlunosProjeto.Api.dto.publicacao.PublicacaoDTOAtualizar;
 import com.alunosprojeto.AlunosProjeto.Api.dto.publicacao.PublicacaoDTOLeitura;
+import com.alunosprojeto.AlunosProjeto.Api.dto.publicacao.PublicacaoDTOLeituraSemLike;
 import com.alunosprojeto.AlunosProjeto.domain.models.Publicacao;
+import com.alunosprojeto.AlunosProjeto.services.LikeService;
 import com.alunosprojeto.AlunosProjeto.services.PublicacaoService;
 import com.alunosprojeto.AlunosProjeto.services.UsuarioEstudanteServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +21,33 @@ public class PublicacaoController {
     @Autowired
     private PublicacaoService service;
 
+    @Autowired
+    private LikeService likeService;
 
     @PostMapping("/{login}")
-    public ResponseEntity<PublicacaoDTOLeitura> publicar(@RequestBody Publicacao publicacao, @PathVariable String login) {
+    public ResponseEntity<PublicacaoDTOLeituraSemLike> publicar(@RequestBody Publicacao publicacao, @PathVariable String login) {
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
-            return ResponseEntity.ok(new PublicacaoDTOLeitura(service.publicar(publicacao,login)));
+
+            return ResponseEntity.ok(new PublicacaoDTOLeituraSemLike(service.publicar(publicacao, login)));
         } else {
-           return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
     @GetMapping
     public ResponseEntity<Page<PublicacaoDTOLeitura>> buscaTodos(@PageableDefault(size = 10, sort = {"titulo"}) Pageable paginacao) {
-        return ResponseEntity.ok(service.buscarTodasPublicacoes(paginacao).map(PublicacaoDTOLeitura::new));
+        Page<Publicacao> slaDificilEmTestaSaporraDepois = service.buscarTodasPublicacoes(paginacao).map(publicacao -> {
+            publicacao.setEstudantesLikes(likeService.buscaEstudantesLikes(publicacao.getId()));
+            Publicacao publicacao1 = publicacao;
+            return publicacao1;
+        });
+        return ResponseEntity.ok(slaDificilEmTestaSaporraDepois.map(PublicacaoDTOLeitura::new));
     }
 
 
     @PutMapping("/{login}/{id}")
-    public ResponseEntity<PublicacaoDTOLeitura> atualizarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id, @RequestBody PublicacaoDTOAtualizar dadosNovos){
+    public ResponseEntity<PublicacaoDTOLeitura> atualizarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id, @RequestBody PublicacaoDTOAtualizar dadosNovos) {
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
             System.out.println(dadosNovos);
@@ -48,7 +58,7 @@ public class PublicacaoController {
     }
 
     @DeleteMapping("/{login}/{id}")
-    public ResponseEntity deletarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id){
+    public ResponseEntity deletarPublicacao(@PathVariable(name = "login") String login, @PathVariable(name = "id") Long id) {
         boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
         if (validacao) {
             service.deletarPublicacao(id);
@@ -58,5 +68,17 @@ public class PublicacaoController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
+
+    @PostMapping("/curtir/{id}")
+    public ResponseEntity<PublicacaoDTOLeitura> curtiPublicacao(@PathVariable(name = "id") Long idPublicacao, @RequestParam(name = "login") String login) {
+        boolean validacao = UsuarioEstudanteServices.verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(login);
+        if (validacao) {
+
+            return ResponseEntity.ok(new PublicacaoDTOLeitura(likeService.curtirPublicacao(idPublicacao, login)));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
 
 }

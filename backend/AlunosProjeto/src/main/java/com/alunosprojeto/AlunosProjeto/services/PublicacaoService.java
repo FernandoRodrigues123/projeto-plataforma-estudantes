@@ -11,12 +11,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PublicacaoService {
     @Autowired
     private PublicacaoRepository repository;
     @Autowired
     private EstudanteServices estudanteServices;
+
+    @Autowired
+    private LikeService likeService;
     @Transactional
     public Publicacao publicar(Publicacao publicacao, String login){
         Estudante estudante = estudanteServices.buscarEstudantePorLogin(login);
@@ -25,6 +30,8 @@ public class PublicacaoService {
     }
 
     public Page<Publicacao> buscarTodasPublicacoes(Pageable paginacao) {
+
+
         return repository.findAll(paginacao);
     }
 
@@ -40,5 +47,11 @@ public class PublicacaoService {
         repository.deleteById(id);
     }
 
+    public Publicacao buscaEstudantesEAdcionaAPublicacao(Publicacao publicacao){
+        List<Estudante> estudantes = likeService.buscaEstudantesLikes(publicacao.getId());
+        publicacao.setEstudantesLikes(estudantes);
+        publicacao.setQuantidadeLikes(Long.valueOf(estudantes.size()));
+        return publicacao;
+    }
 
 }

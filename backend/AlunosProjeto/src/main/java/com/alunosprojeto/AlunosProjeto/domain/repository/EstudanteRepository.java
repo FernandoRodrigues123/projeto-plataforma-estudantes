@@ -22,8 +22,10 @@ public interface EstudanteRepository extends JpaRepository<Estudante,Long> {
 
     boolean existsByUsuarioEstudanteLogin(String login);
 
-    Estudante getByUsuarioEstudanteLogin(String username);
+    Estudante getByUsuarioEstudanteLogin(String login );
 
     @Query("SELECT e FROM Estudante e WHERE e.usuarioEstudante.login = :login AND e.usuarioEstudante.senha = :senha")
     Estudante getByUsuarioEstudanteLoginAndSenha(@Param("login") String login, @Param("senha")String senha);
+
+
 }

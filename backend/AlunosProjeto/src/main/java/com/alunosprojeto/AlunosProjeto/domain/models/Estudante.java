@@ -37,8 +37,11 @@ public class Estudante {
     @Embedded
     private UsuarioEstudante usuarioEstudante;
 
-    @OneToMany(mappedBy = "estudante")
+    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Publicacao> publicacoes;
+
+    @ManyToMany(mappedBy = "estudantesLikes")
+    private List<Publicacao> publicacoesCurtidas;
 
 
     public Estudante(EstudanteDTO estudanteDTO) {
