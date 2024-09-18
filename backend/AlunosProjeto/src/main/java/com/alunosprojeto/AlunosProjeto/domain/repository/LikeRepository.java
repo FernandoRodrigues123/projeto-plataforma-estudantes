@@ -10,5 +10,6 @@ import java.util.List;
 public interface LikeRepository extends JpaRepository<Like,Long> {
 
     List<Like> findAllByPublicacaoId(Long publicacaoId);
-
+    boolean existsByPublicacaoIdAndEstudanteId(Long publicacaoId, Long estudanteId);
+    Like findByPublicacaoIdAndEstudanteId(Long publicacaoId, Long estudanteId);
 }

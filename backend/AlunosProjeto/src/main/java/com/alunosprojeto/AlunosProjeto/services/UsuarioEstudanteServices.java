@@ -24,7 +24,6 @@ public class UsuarioEstudanteServices implements UserDetailsService {
     }
 
     public static boolean verificaUsuarioEstaTentandoAcessarProprioPerfilPeloLogin(String loginRecebido){
-        String senha = pegaUsuarioEstudante().getSenha();
         String login = pegaUsuarioEstudante().getLogin();//pega os dados do usuario altenticado,  e  pega o id do mesmo
 
         if (loginRecebido.equals(login)) return true;
