@@ -52,4 +52,16 @@
     font-style: italic;
     color: #888;
 }
+.botao-like{
+    background-color: #ffffff00;
+    border: none;
+        
+}
+
+#like-icon{
+    width: 30px;
+}
+footer{
+    display: flex;
+}
 

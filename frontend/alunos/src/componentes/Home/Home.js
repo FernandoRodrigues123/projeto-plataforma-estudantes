@@ -8,13 +8,16 @@ import PublicacaoCard from '../Publicacao/PublicacaoCard/PublicacaoCard.js'
 const Home = () => {
     const [numeroPagina, setNumeroPagina] = useState(0);
     const [pagina, setPagina] = useState(publicacaoPagina);
-    const [requisicaoValida, setRequisicaoValida] = useState(true)
+    const [requisicaoValida, setRequisicaoValida] = useState(true);
     const token = localStorage.getItem('token');
 
 
     const fetchData = async () => {
         try {
+            
             if (token != null && requisicaoValida) {
+                console.log(token);
+        
                 const data = await BuscaTodasPublicacoesRequest(token, numeroPagina);
                 setPagina(data);
                 setRequisicaoValida(false)
@@ -34,6 +37,7 @@ const Home = () => {
     });
 
     const handlePageChange = async (novoNumeroDePagina) => {
+       
         await setNumeroPagina(novoNumeroDePagina);
         setRequisicaoValida(true)
         console.log("Novo número de página:", numeroPagina);
