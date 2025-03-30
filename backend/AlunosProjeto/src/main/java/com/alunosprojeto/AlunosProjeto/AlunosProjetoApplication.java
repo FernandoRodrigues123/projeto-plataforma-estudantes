@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class AlunosProjetoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AlunosProjetoApplication.class, args);
+			SpringApplication.run(AlunosProjetoApplication.class, args);
 
 	}
 

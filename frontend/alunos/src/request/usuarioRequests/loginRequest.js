@@ -16,6 +16,7 @@ async function loginRequest(login, senha) {
     }else{
         alert("dados invalidos")
     }
+    
 }
 
 export default loginRequest;
