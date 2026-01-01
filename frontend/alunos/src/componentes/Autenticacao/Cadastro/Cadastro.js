@@ -22,7 +22,7 @@ const Cadastro = () => {
         // Verifica se uma imagem foi selecionada
         if (imagem) {
             try {
-                // Realiza o upload do arquiv   o
+                // Realiza o upload do arquiv   o 
                 const data = await uploadFile({ target: { files: [imagem] } });
                 // Obtém a URL  do arquivo enviado
                 console.log(data);
